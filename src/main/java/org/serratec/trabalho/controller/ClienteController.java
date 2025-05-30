@@ -60,8 +60,7 @@ public class ClienteController {
 		
 		clienteService.inserir(clienteInsDTO);
 		
-		String msg = String.format("Olá, %s! Seu cadastro foi realizado com sucesso!", clienteInsDTO.getNome());
-		emailService.SendEmail(clienteInsDTO.getEmail(), "Cadastro realizado com sucesso!", msg);
+		emailService.SendEmailCadastrado(clienteInsDTO.getEmail(), "Cadastro realizado com sucesso!", clienteInsDTO.getNome());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteInsDTO);
 	}
@@ -80,8 +79,8 @@ public class ClienteController {
 	    ClienteDTO cliente = clienteService.buscar(id);
 	    if (cliente != null) {
 	        clienteService.deleteById(id);
-	        String msg = String.format("Olá, %s! Seu cadastro foi excluído com sucesso!", cliente.getNome());
-	        emailService.SendEmail(cliente.getEmail(), "Cadastro excluído com sucesso!", msg);
+	        
+	        emailService.SendEmailRemovido(cliente.getEmail(), "Cadastro excluído com sucesso!", cliente.getNome());
 	        return ResponseEntity.noContent().build();
 	    }
 	    return ResponseEntity.notFound().build();
