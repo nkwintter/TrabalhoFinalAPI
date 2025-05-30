@@ -23,9 +23,14 @@ public class Cliente {
     @NotBlank 
     private String telefone;
     
+    private String role;
+    
     @Email 
     @NotBlank 
     private String email;
+    
+    @NotBlank(message = "A senha não pode ser vazia")
+    private String senha;
     
     @CPF
     @NotBlank(message = "O CPF é obrigatório!") 
@@ -83,4 +88,22 @@ public class Cliente {
 	public void setEndereco(EnderecoCliente endereco) {
 		this.endereco = endereco;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	
 }

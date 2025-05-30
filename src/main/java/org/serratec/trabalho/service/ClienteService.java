@@ -10,6 +10,7 @@ import org.serratec.trabalho.domain.EnderecoViaCep;
 import org.serratec.trabalho.dto.ClienteDTO;
 import org.serratec.trabalho.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,10 +37,20 @@ public class ClienteService {
         }
         return null;
     }
+    
+ // Buscar cliente por email
+    public ClienteDTO FindByEmail(String email) {
+        Optional<Cliente> clienteOpt = clienteRepository.findByEmail(email);
+        if (clienteOpt.isPresent()) {
+            return new ClienteDTO(clienteOpt.get());
+        }
+        return null;
+    }
 
     // Inserir novo cliente
     public ClienteDTO inserir(ClienteDTO clienteDTO) {
         Cliente cliente = toEntity(clienteDTO);
+        
         cliente = clienteRepository.save(cliente);
         return new ClienteDTO(cliente);
     }
@@ -85,6 +96,9 @@ public class ClienteService {
         cliente.setTelefone(dto.getTelefone());
         cliente.setCpf(dto.getCpf());
         cliente.setEmail(dto.getEmail());
+        cliente.setSenha(new BCryptPasswordEncoder().encode(dto.getSenha()));
+        cliente.setRole("USER");
+
 
         if (dto.getEndereco() != null) {
             EnderecoCliente end = new EnderecoCliente();
