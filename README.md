@@ -99,7 +99,7 @@ Desenvolvido com carinho e muitos `commits` pelos devs:
 - [Julya Werneck🌷](https://www.linkedin.com/in/julya-werneck-b166892bb/)  
 - [Nikolas Wintter 🌹](https://www.linkedin.com/in/nikolas-wintter-2608a8317/)
 - [Paulo Ricardo 🌾](https://www.linkedin.com/in/paulorccardoso/)
-- [João Pedro Dias 🍀](https://www.linkedin.com/in/julya-werneck-b166892bb/)
+- [João Pedro Dias 🍀](https://www.linkedin.com/in/joão-pedro-dias-rodrigues-27b6801b8)
 - [Lívia Raissinger 🌻](https://www.linkedin.com/in/liviaraissinger/)
 - [Aline Cabral de Azevedo 🌼](https://www.linkedin.com/in/alinemielli/)
 
