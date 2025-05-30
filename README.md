@@ -1,3 +1,5 @@
+<img src="https://github.com/user-attachments/assets/d7b57fc6-66c1-4b6b-a4ca-e4545a1d5dc0"> 
+
 # 🌱 Div das Plantas API - Onde seus pedidos florescem com Spring!
 
 Bem-vindo(a) à API do **Div das Plantas**, o ecommerce mais verde do backend!  
@@ -95,7 +97,7 @@ Sempre que um cliente se registra, fazemos uma chamada à API do ViaCEP para gar
 Desenvolvido com carinho e muitos `commits` pelos devs:
 
 - [Julya Werneck🌷](https://www.linkedin.com/in/julya-werneck-b166892bb/)  
-- [Nikola Wintter 🌹](https://www.linkedin.com/in/nikolas-wintter-2608a8317/)
+- [Nikolas Wintter 🌹](https://www.linkedin.com/in/nikolas-wintter-2608a8317/)
 - [Paulo Ricardo 🌾](https://www.linkedin.com/in/paulorccardoso/)
 - [João Pedro Dias 🍀](https://www.linkedin.com/in/julya-werneck-b166892bb/)
 - [Lívia Raissinger 🌻](https://www.linkedin.com/in/liviaraissinger/)
