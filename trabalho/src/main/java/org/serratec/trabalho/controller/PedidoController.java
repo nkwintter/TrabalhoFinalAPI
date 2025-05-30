@@ -30,7 +30,10 @@ public class PedidoController {
 	@GetMapping("/{id}")
 	public ResponseEntity<PedidoDTO> buscar(@PathVariable Long id) {
 		PedidoDTO dto = pedidoService.buscar(id);
-		return ResponseEntity.ok(dto);
+		if(dto != null) {
+			return ResponseEntity.ok(dto);
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping

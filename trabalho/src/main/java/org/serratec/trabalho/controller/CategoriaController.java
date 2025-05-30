@@ -33,7 +33,10 @@ public class CategoriaController {
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoriaDTO> buscar(@PathVariable Long id) {
 		CategoriaDTO dto = categoriaService.buscar(id);
-		return ResponseEntity.ok(dto);
+		if(dto != null) {
+			return ResponseEntity.ok(dto);
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
