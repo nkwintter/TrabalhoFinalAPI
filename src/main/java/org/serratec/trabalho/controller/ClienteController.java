@@ -60,6 +60,7 @@ public class ClienteController {
 		
 		clienteService.inserir(clienteInsDTO);
 		
+		//envio do email
 		emailService.SendEmailCadastrado(clienteInsDTO.getEmail(), "Cadastro realizado com sucesso!", clienteInsDTO.getNome());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteInsDTO);
@@ -79,8 +80,9 @@ public class ClienteController {
 	    ClienteDTO cliente = clienteService.buscar(id);
 	    if (cliente != null) {
 	        clienteService.deleteById(id);
-	        
+	        //envio do email
 	        emailService.SendEmailRemovido(cliente.getEmail(), "Cadastro excluído com sucesso!", cliente.getNome());
+			
 	        return ResponseEntity.noContent().build();
 	    }
 	    return ResponseEntity.notFound().build();
