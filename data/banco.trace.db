@@ -147,3 +147,13 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/User/On
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 130 more
+2025-05-31 00:15:46.159425-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE FROM CLIENTE WHERE ID = 135\000d\000a\000d\000a[*]SELECT * FROM CLIENTE"; SQL statement:
+DELETE FROM CLIENTE WHERE ID = 135
+
+SELECT * FROM CLIENTE [42000-232]
+2025-05-31 00:16:02.390892-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE FROM CLIENTE WHERE ID = 135\000d\000a\000d\000a[*]SELECT * FROM CLIENTE"; SQL statement:
+DELETE FROM CLIENTE WHERE ID = 135
+
+SELECT * FROM CLIENTE [42000-232]
