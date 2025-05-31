@@ -29,15 +29,15 @@ public class AutorizacaoController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
             Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha())
-            );
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha()));
             
             String email = auth.getName(); 
 
             String token = jwtUtil.generateToken(email);
             return ResponseEntity.ok(new LoginResponse(token));
+            
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(401).body("Email ou senha inválidos");
+            return ResponseEntity.status(401).body("Email ou senha inválidos! Confira os campos e tente novamente.");
         }
     }
     

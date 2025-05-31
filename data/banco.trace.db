@@ -157,3 +157,6 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE F
 DELETE FROM CLIENTE WHERE ID = 135
 
 SELECT * FROM CLIENTE [42000-232]
+2025-05-31 11:39:00.680107-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE FROM CLIENTE WHERE ID = 65[*], 66, 97, 98"; SQL statement:
+DELETE FROM CLIENTE WHERE ID = 65, 66, 97, 98 [42000-232]
