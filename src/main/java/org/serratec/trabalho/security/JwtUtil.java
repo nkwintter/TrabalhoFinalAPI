@@ -12,7 +12,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "chave-secreta-muito-secreta";
+    private static final String SECRET_KEY = "m3uS3gr3d0$up3rF0rt3C0mM41sD3Tr1nt4C@r@ct3r3s!";
     private final long EXPIRATION = 1000 * 60 * 60; // 1 hora
     
     private Key getSigningKey() {

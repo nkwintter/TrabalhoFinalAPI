@@ -31,8 +31,10 @@ public class AutorizacaoController {
             Authentication auth = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha())
             );
+            
+            String email = auth.getName(); 
 
-            String token = jwtUtil.generateToken(request.getEmail());
+            String token = jwtUtil.generateToken(email);
             return ResponseEntity.ok(new LoginResponse(token));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(401).body("Email ou senha inválidos");
@@ -40,3 +42,5 @@ public class AutorizacaoController {
     }
     
 }
+
+

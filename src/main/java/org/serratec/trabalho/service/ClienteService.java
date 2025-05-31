@@ -11,6 +11,7 @@ import org.serratec.trabalho.dto.ClienteDTO;
 import org.serratec.trabalho.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Buscar todos os clientes
     public List<ClienteDTO> buscarTodos() {
@@ -93,12 +97,12 @@ public class ClienteService {
     // Conversão DTO -> Entidade
     private Cliente toEntity(ClienteDTO dto) {
         Cliente cliente = new Cliente();
-        cliente.setId(dto.getId());
+        //cliente.setId(dto.getId());
         cliente.setNome(dto.getNome());
         cliente.setTelefone(dto.getTelefone());
         cliente.setCpf(dto.getCpf());
         cliente.setEmail(dto.getEmail());
-        cliente.setSenha(new BCryptPasswordEncoder().encode(dto.getSenha()));
+        cliente.setSenha(passwordEncoder.encode(dto.getSenha()));
         cliente.setRole("USER");
 
         if (dto.getEndereco() != null) {

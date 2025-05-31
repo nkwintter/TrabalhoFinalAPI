@@ -49,7 +49,7 @@ public class ClienteController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClienteDTO> inserir(@RequestBody  ClienteDTO clienteInsDTO){
+	public ResponseEntity<ClienteDTO> inserir(@RequestBody ClienteDTO clienteInsDTO){
 		
 		EnderecoViaCep enderecoapi = ViacepApiService.consultarViaCep(clienteInsDTO.getEndereco().getCep());
 		
@@ -58,7 +58,7 @@ public class ClienteController {
 		clienteInsDTO.getEndereco().setLogradouro(enderecoapi.getLogradouro());
 		clienteInsDTO.getEndereco().setUf(enderecoapi.getUf());
 		
-		clienteService.inserir(clienteInsDTO);
+		clienteInsDTO = clienteService.inserir(clienteInsDTO);
 		
 		//envio do email
 		emailService.SendEmailCadastrado(clienteInsDTO.getEmail(), "Cadastro realizado com sucesso!", clienteInsDTO.getNome());
