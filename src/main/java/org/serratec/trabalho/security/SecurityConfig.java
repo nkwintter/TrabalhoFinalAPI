@@ -33,16 +33,18 @@ public class SecurityConfig {
         http
         	.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+            	.requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/clientes", "/auth").permitAll()
-                .requestMatchers(HttpMethod.GET, "/clientes/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/produtos/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/clientes/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/produtos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/produtos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/pedidos").hasRole("USER")
                 .anyRequest().authenticated()
             )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)) //  <-> ALWAYS para testes
+            .headers(headers -> headers.frameOptions().sameOrigin())
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
