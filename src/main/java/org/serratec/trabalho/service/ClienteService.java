@@ -64,6 +64,8 @@ public class ClienteService {
             cliente.setEmail(clienteDTO.getEmail());
             cliente.setCpf(clienteDTO.getCpf());
             cliente.setTelefone(clienteDTO.getTelefone());
+            cliente.setSenha(new BCryptPasswordEncoder().encode(clienteDTO.getSenha()));
+            cliente.setRole("USER");
 
             if (clienteDTO.getEndereco() != null) {
                 String novoCep = clienteDTO.getEndereco().getCep();
@@ -98,7 +100,6 @@ public class ClienteService {
         cliente.setEmail(dto.getEmail());
         cliente.setSenha(new BCryptPasswordEncoder().encode(dto.getSenha()));
         cliente.setRole("USER");
-
 
         if (dto.getEndereco() != null) {
             EnderecoCliente end = new EnderecoCliente();
