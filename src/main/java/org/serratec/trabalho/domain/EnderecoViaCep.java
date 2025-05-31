@@ -1,6 +1,7 @@
 package org.serratec.trabalho.domain;
 
 public class EnderecoViaCep {
+	
 	private String cep;
     private String logradouro;
     private String bairro;

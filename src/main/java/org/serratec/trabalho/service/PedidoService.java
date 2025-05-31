@@ -8,6 +8,7 @@ import org.serratec.trabalho.domain.ItemPedido;
 import org.serratec.trabalho.domain.Pedido;
 import org.serratec.trabalho.domain.StatusPedido;
 import org.serratec.trabalho.dto.PedidoDTO;
+import org.serratec.trabalho.exception.PedidoNaoEncontrado;
 import org.serratec.trabalho.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class PedidoService {
         if (pedidoOpt.isPresent()) {
             return new PedidoDTO(pedidoOpt.get());
         }
-        return null;
+        throw new PedidoNaoEncontrado("O pedido com ID " + id + " não foi encontrado.");
     }
 	
 //    //REVER !!!
@@ -64,8 +65,9 @@ public class PedidoService {
 
 	// Deletar Pedido
     public void deleteById(Long id) {
-        pedidoRepository.deleteById(id);
-    }
+    	Pedido pedidodel = pedidoRepository.findById(id) .orElseThrow(() 
+    			-> new PedidoNaoEncontrado("O pedido com ID " + id + " não foi encontrado."));
+    	        pedidoRepository.delete(pedidodel); }
     
     //TERMINAR( !!!
     //To entity DTO -> entidade

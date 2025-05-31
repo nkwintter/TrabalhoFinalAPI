@@ -9,7 +9,6 @@ public class RespostaErro {
 	private String titulo;
 	private LocalDateTime dataHora;
 	private List<String> erros;
-//+++++
 	
 	public RespostaErro(Integer status, String titulo, LocalDateTime dataHora, List<String> erros) {
 		this.status = status;

@@ -8,6 +8,7 @@ import org.serratec.trabalho.domain.Cliente;
 import org.serratec.trabalho.domain.EnderecoCliente;
 import org.serratec.trabalho.domain.EnderecoViaCep;
 import org.serratec.trabalho.dto.ClienteDTO;
+import org.serratec.trabalho.exception.ClienteException;
 import org.serratec.trabalho.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,9 @@ public class ClienteService {
         if (clienteOpt.isPresent()) {
             return new ClienteDTO(clienteOpt.get());
         }
-        return null;
+        throw new ClienteException("Cliente com ID " + id + " não foi encontrado.");
     }
+
 
     // Inserir novo cliente
     public ClienteDTO inserir(ClienteDTO clienteDTO) {
@@ -69,13 +71,14 @@ public class ClienteService {
             cliente = clienteRepository.save(cliente);
             return new ClienteDTO(cliente);
         }
-        return null;
+        throw new ClienteException("Cliente com ID " + id + " não foi encontrado.");
     }
 
     // Deletar cliente
     public void deleteById(Long id) {
-        clienteRepository.deleteById(id);
-    }
+    	Cliente clientedel = clienteRepository.findById(id) .orElseThrow(() 
+    			-> new ClienteException("Cliente com ID " + id + " não foi encontrado."));
+    	       clienteRepository.delete(clientedel); }
 
     // Conversão DTO -> Entidade
     private Cliente toEntity(ClienteDTO dto) {

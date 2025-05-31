@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.serratec.trabalho.domain.Categoria;
 import org.serratec.trabalho.domain.Produto;
 import org.serratec.trabalho.dto.ProdutoDTO;
+import org.serratec.trabalho.exception.ProdutoNaoEncontradoException;
 import org.serratec.trabalho.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +35,10 @@ public class ProdutoService {
     }
     
     public Produto buscarId(Long id) {
-    	Optional<Produto> produtoOpt = produtoRepository.findById(id);
-        return produtoOpt.orElse(null);
+        return produtoRepository.findById(id)
+            .orElseThrow(() -> new ProdutoNaoEncontradoException("Produto com ID " + id + " não foi encontrado."));
     }
+
 
     // Inserir novo produto
     public ProdutoDTO inserir(ProdutoDTO produtoDTO) {
@@ -56,13 +58,14 @@ public class ProdutoService {
             produto = produtoRepository.save(produto);
             return new ProdutoDTO(produto);
         }
-        return null;
+        throw new ProdutoNaoEncontradoException("Produto com ID " + id + " não foi encontrado.");
     }
 
     // Deletar por ID
     public void deleteById(Long id) {
-        produtoRepository.deleteById(id);
-    }
+    	Produto produtodel = produtoRepository.findById(id) .orElseThrow(() 
+    			-> new ProdutoNaoEncontradoException("Produto com ID " + id + " não foi encontrado."));
+    	produtoRepository.delete(produtodel); }
 
     // Conversão DTO -> Entidade
     private Produto toEntity(ProdutoDTO dto) {

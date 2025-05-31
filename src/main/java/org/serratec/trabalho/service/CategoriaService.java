@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.serratec.trabalho.domain.Categoria;
 import org.serratec.trabalho.dto.CategoriaDTO;
+import org.serratec.trabalho.exception.CategoriaNaoEncontradaException;
 import org.serratec.trabalho.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class CategoriaService {
         if (categoriaOpt.isPresent()) {
             return new CategoriaDTO(categoriaOpt.get());
         }
-        return null;
+        throw new CategoriaNaoEncontradaException("Categoria com ID " + id + " não foi encontrada.");
     }
 
     // Inserir nova
@@ -51,13 +52,13 @@ public class CategoriaService {
             categoria = categoriaRepository.save(categoria);
             return new CategoriaDTO(categoria);
         }
-        return null;
+        throw new CategoriaNaoEncontradaException("Categoria com ID " + id + " não foi encontrada.");
     }
 
     // Deletar por ID
     public void deleteById(Long id) {
-        categoriaRepository.deleteById(id);
-    }
+Categoria categoriadel = categoriaRepository.findById(id) .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria com ID " + id + " não foi encontrada."));
+       categoriaRepository.delete(categoriadel); }
 
     // Find by ID (opcional para o controller)
     public Optional<CategoriaDTO> findById(Long id) {

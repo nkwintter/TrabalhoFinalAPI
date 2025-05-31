@@ -15,7 +15,7 @@ public class Produto {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank(message = "O nome não pode ser vazio!")
+    @NotBlank(message = "O nome é obrigatório.")
     private String nome;
     
     @ManyToOne

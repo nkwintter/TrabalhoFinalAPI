@@ -2,13 +2,9 @@ package org.serratec.trabalho.dto;
 
 import org.serratec.trabalho.domain.EnderecoCliente;
 
-import jakarta.validation.constraints.NotBlank;
-
 public class EnderecoDTO {
 	
-	@NotBlank(message = "O CEP é obrigatório.")
 	private String cep;
-	
 	private String logradouro;
 	private String complemento;
 	private String localidade;

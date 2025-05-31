@@ -2,25 +2,27 @@ package org.serratec.trabalho.domain;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Embeddable
 public class EnderecoCliente {
 	@NotBlank(message = "O cep deve ser preenchido!")
 	@Size(min = 9, max = 9, message = "O cep deve conter 9 digitos, contando com o -.")
+	 @Pattern(regexp = "\\d{5}-\\d{3}", message = "CEP deve estar no formato 12345-678")
 	private String cep;
 	
-	@NotBlank(message = "O logradouro deve ser preenchida!")
+	@NotBlank(message = "O logradouro deve ser preenchido!")
 	private String logradouro;
 	
 	@NotBlank(message = "A cidade deve ser preenchida!")
 	private String localidade;
 	
-	@NotBlank(message = "O bairro deve ser preenchida!")
+	@NotBlank(message = "O bairro deve ser preenchido!")
 	private String bairro;
 	
 	@NotBlank(message = "O estado deve ser preenchido!")
-	@Size(min = 2, max = 2, message = "A sigla do estado deve conter somente 2 letras!")
+	@Size(min = 2, max = 2, message = "A sigla do estado deve conter somente 2 letras! Ex: BA.")
 	private String uf;
 	
 	public EnderecoCliente() {

@@ -11,27 +11,33 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Cliente {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank 
+        @Size(min = 2, max = 100)
+    @NotBlank(message = "O nome é obrigatório.")
+	@Pattern(regexp = "^[A-Za-zÀ-ÿ\\s'-]+$", message = "O nome não pode conter números ou caracteres especiais.")
     private String nome;
-    
-    @NotBlank 
+   
+    @NotBlank(message = "O telefone é obrigatório.")
+    @Size(min = 10, max = 15, message = "O telefone deve ter entre 10 e 15 caracteres.")
+    @Pattern(regexp = "^[0-9+()\\-\\s]*$", message = "Telefone inválido. Por favor, verifique o número informado.")
     private String telefone;
     
-    @Email 
-    @NotBlank 
+	@Email(message = "E-mail inválido.")
+	@NotBlank(message = "O e-mail é obrigatório.") 
     private String email;
     
-    @CPF
-    @NotBlank(message = "O CPF é obrigatório!") 
+	@CPF(message = "CPF inválido.")
+	@NotBlank(message = "O CPF é obrigatório.") 
     private String cpf;
     
-    @NotNull(message = "O endereço não pode ser vazio!")
+    @NotNull(message = "O endereço é obrigatório.")
 	@Embedded
 	@Valid
 	private EnderecoCliente endereco;
