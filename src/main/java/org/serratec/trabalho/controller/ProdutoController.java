@@ -76,9 +76,9 @@ public class ProdutoController {
 	}
 	
 	@PostMapping
-	public  ResponseEntity<ProdutoDTO> inserir(@RequestBody @Valid ProdutoDTO produtoInsDTO) {
-		ProdutoDTO produtoDTO = produtoService.inserir(produtoInsDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).body(produtoDTO);
+	public ResponseEntity<ProdutoDTO> inserir(@RequestBody @Valid ProdutoDTO produtoInsDTO) {
+		produtoInsDTO = produtoService.inserir(produtoInsDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(produtoInsDTO);
 	}
 	
 	@PutMapping("/{id}")

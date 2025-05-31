@@ -41,6 +41,7 @@ public class ProdutoService {
     // Inserir novo produto
     public ProdutoDTO inserir(ProdutoDTO produtoDTO) {
         Produto produto = toEntity(produtoDTO);
+        
         produto = produtoRepository.save(produto);
         return new ProdutoDTO(produto);
     }
@@ -67,7 +68,7 @@ public class ProdutoService {
     // Conversão DTO -> Entidade
     private Produto toEntity(ProdutoDTO dto) {
         Produto produto = new Produto();
-        produto.setId(dto.getId());
+        //produto.setId(dto.getId());
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
         produto.setCategoria(new Categoria(dto.getCategoria().getId(), dto.getCategoria().getNome()));
