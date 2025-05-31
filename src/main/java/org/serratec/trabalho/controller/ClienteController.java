@@ -18,10 +18,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/clientes")
+@Tag(name = "Clientes", description = "Endpoints para gerenciamento de clientes")
 public class ClienteController {
 	
 	@Autowired
@@ -32,11 +36,13 @@ public class ClienteController {
 	
 	
 	@GetMapping
+	@Operation(summary = "Listar todos os clientes")
 	public ResponseEntity<List<ClienteDTO>> listar(){
 		return ResponseEntity.ok(clienteService.buscarTodos());
 	}
 	
 	@GetMapping("/{id}")
+	@Operation(summary = "Listar um cliente especifico")
 	public ResponseEntity<ClienteDTO> buscar(@PathVariable Long id) {
 		ClienteDTO dto = clienteService.buscar(id);
 		
@@ -49,6 +55,7 @@ public class ClienteController {
 	}
 	
 	@PostMapping
+	@Operation(summary = "Criar um novo cliente")
 	public ResponseEntity<ClienteDTO> inserir(@RequestBody  ClienteDTO clienteInsDTO){
 		
 		EnderecoViaCep enderecoapi = ViacepApiService.consultarViaCep(clienteInsDTO.getEndereco().getCep());
@@ -66,6 +73,7 @@ public class ClienteController {
 	}
 	
 	@PutMapping("/{id}")
+	@Operation(summary = "Atualizar cliente")
 	public ResponseEntity<ClienteDTO> atualizar(@PathVariable Long id, @RequestBody @Valid ClienteDTO clienteDTO) {
 	    ClienteDTO atualizado = clienteService.atualizar(id, clienteDTO);
 	    if (atualizado != null) {
@@ -75,6 +83,7 @@ public class ClienteController {
 	}
 
 	@DeleteMapping("/{id}")
+	@Operation(summary = "Remover cliente")
 	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 	    ClienteDTO cliente = clienteService.buscar(id);
 	    if (cliente != null) {

@@ -76,12 +76,14 @@ public class ProdutoController {
 	}
 	
 	@PostMapping
+	 @Operation(summary = "Criar um novo produto")
 	public  ResponseEntity<ProdutoDTO> inserir(@RequestBody @Valid ProdutoDTO produtoInsDTO) {
 		ProdutoDTO produtoDTO = produtoService.inserir(produtoInsDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoDTO);
 	}
 	
 	@PutMapping("/{id}")
+	@Operation(summary = "Atualizar um produto")
 	public ResponseEntity<ProdutoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid ProdutoDTO produtoDTO) {
 	    ProdutoDTO atualizado = produtoService.atualizar(id, produtoDTO);
 	    if (atualizado != null) {
@@ -91,6 +93,7 @@ public class ProdutoController {
 	}
 
 	@DeleteMapping("/{id}")
+	@Operation(summary = "Atualizar um produto")
 	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 	    if (produtoService.existsById(id)) {
 	        produtoService.deleteById(id);

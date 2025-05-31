@@ -1,5 +1,6 @@
 package org.serratec.trabalho.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.serratec.trabalho.domain.Cliente;
@@ -13,12 +14,17 @@ public class PedidoDTO {
 	
 	private String status;
 	
+	private LocalDateTime data;
+	
 	private List<ItemPedidoDTO> itens;
 	
     public PedidoDTO(Pedido pedido) {
         this.id = pedido.getId();
         this.cliente = pedido.getCliente();
         this.status = pedido.getStatus().toString();
+        
+        
+        this.data = pedido.getDataCriacao();
     }
 	
 	public PedidoDTO() {
@@ -57,6 +63,13 @@ public class PedidoDTO {
 		this.itens = itens;
 	}
 
-	
+	public LocalDateTime getData() {
+		return data;
+	}
+
+	public void setData(LocalDateTime data) {
+		this.data = data;
+	}
+
 
 }

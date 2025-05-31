@@ -16,33 +16,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/categorias")
+@Tag(name = "Categorias", description = "Endpoints para gerenciamento de categorias")
 public class CategoriaController {
 
 	@Autowired
 	private CategoriaService categoriaService;
 	
 	@GetMapping
+	@Operation(summary = "Listar todas as categorias")
 	public ResponseEntity<List<CategoriaDTO>> listar(){
 		return ResponseEntity.ok(categoriaService.listar());
 	}
 	
 	@GetMapping("/{id}")
+	@Operation(summary = "Listar uma categoria especifica")
 	public ResponseEntity<CategoriaDTO> buscar(@PathVariable Long id) {
 		CategoriaDTO dto = categoriaService.buscar(id);
 		return ResponseEntity.ok(dto);
 	}
 	
 	@PostMapping
+	@Operation(summary = "Criar uma nova categoria")
 	public ResponseEntity<CategoriaDTO> inserir(@RequestBody @Valid CategoriaDTO categoriaInsDTO){
 		CategoriaDTO categoriaDTO = categoriaService.inserir(categoriaInsDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(categoriaDTO);
 	}
 	
 	@PutMapping("/{id}")
+	@Operation(summary = "Atualizar uma categoria existente")
 	public ResponseEntity<CategoriaDTO> atualizar(@PathVariable Long id, @RequestBody @Valid CategoriaDTO categoriaDTO) {
 	    CategoriaDTO atualizado = categoriaService.atualizar(id, categoriaDTO);
 	    if (atualizado != null) {
@@ -52,6 +59,7 @@ public class CategoriaController {
 	}
 
 	@DeleteMapping("/{id}")
+	@Operation(summary = "Remover uma categoria")
 	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 	    CategoriaDTO categoria = categoriaService.buscar(id);
 	    if (categoria != null) {
