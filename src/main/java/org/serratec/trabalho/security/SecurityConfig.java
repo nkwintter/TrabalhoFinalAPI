@@ -34,6 +34,7 @@ public class SecurityConfig {
         	.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
             	.requestMatchers("/h2-console/**").permitAll()
+            	.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/webjars/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/clientes", "/auth").permitAll()
                 .requestMatchers(HttpMethod.GET, "/clientes/me").hasRole("USER")
                 .requestMatchers(HttpMethod.GET, "/produtos/**").permitAll()
@@ -48,7 +49,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "categorias/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //  <-> ".ALWAYS" para testes
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)) //  <-> ".ALWAYS" para testes
             .headers(headers -> headers.frameOptions().sameOrigin())
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 

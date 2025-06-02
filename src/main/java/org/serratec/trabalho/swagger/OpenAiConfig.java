@@ -2,6 +2,7 @@ package org.serratec.trabalho.swagger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -9,10 +10,12 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
 
+@Configuration
 public class OpenAiConfig {
-    @Value("http://localhost:8080")
+	@Value("${app.dev-url}")
     private String devUrl;
-    @Value("http://localhost:8080")
+
+    @Value("${app.prod-url}")
     private String prodUrl;
     
     @Bean
@@ -28,7 +31,6 @@ public class OpenAiConfig {
         Contact contact = new Contact();
         contact.setEmail("divdasplantas@gmail.com");
         contact.setName("Div das Plantas");
-        contact.setUrl("http://www.divdasplantas.org");
         
         License apacheLicense = new License().name("Apache  License")
         .url("http://www.apache.org/licenses/LICENSE-2.0");
