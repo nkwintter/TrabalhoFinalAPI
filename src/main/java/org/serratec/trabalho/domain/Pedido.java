@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -35,7 +37,8 @@ public class Pedido {
 	private Double totalPedido;
 
 	private int desconto = 10;
-
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataCriacao;
 
 	@PrePersist
@@ -44,12 +47,14 @@ public class Pedido {
 	}
 
 	public void calcularTotalPedido() {
+		double subTotal = 0;
 		
-		double subTotal = itens.stream()
-				.mapToDouble((ItemPedido::getSubtotal))
-				.sum();
+		for(ItemPedido item : this.itens){
+			subTotal += item.getSubtotal();
+		}
 				
 		this.totalPedido = subTotal - (subTotal * (desconto / 100));
+		System.out.println(totalPedido);
 		
 	}
 

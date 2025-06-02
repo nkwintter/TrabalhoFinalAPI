@@ -22,7 +22,7 @@ public class ItemPedido {
     private double valor;
     
     public double getSubtotal() {
-    	return valor * quantidade;
+    	return this.valor * this.quantidade;
     }
 
     public Long getId() {

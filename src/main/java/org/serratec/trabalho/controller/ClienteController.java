@@ -5,6 +5,7 @@ import java.util.List;
 import org.serratec.trabalho.domain.EnderecoViaCep;
 import org.serratec.trabalho.dto.ClienteDTO;
 import org.serratec.trabalho.dto.PedidoDTO;
+import org.serratec.trabalho.dto.PedidoDTOSimplificado;
 import org.serratec.trabalho.security.JwtUtil;
 import org.serratec.trabalho.service.ClienteService;
 import org.serratec.trabalho.service.PedidoService;
@@ -106,14 +107,14 @@ public class ClienteController {
 	
 	//Post de pedido
 	@PostMapping("/me/pedidos")
-	public ResponseEntity<PedidoDTO> inserir(
+	public ResponseEntity<PedidoDTOSimplificado> inserir(
 			@RequestHeader("Authorization") String authHeader,
 			@RequestBody PedidoDTO pedidoInsDTO){
 		
 		String token = authHeader.replace("Bearer ", "");
 		String email = jwtUtil.extractUsername(token);
 		
-		PedidoDTO pedidoDTO = pedidoService.inserirPedidoUser(email, pedidoInsDTO);
+		PedidoDTOSimplificado pedidoDTO = pedidoService.inserirPedidoUser(email, pedidoInsDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDTO);
 	}
 	

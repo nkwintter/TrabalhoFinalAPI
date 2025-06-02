@@ -9,6 +9,7 @@ import org.serratec.trabalho.domain.Pedido;
 import org.serratec.trabalho.domain.Produto;
 import org.serratec.trabalho.domain.StatusPedido;
 import org.serratec.trabalho.dto.PedidoDTO;
+import org.serratec.trabalho.dto.PedidoDTOSimplificado;
 import org.serratec.trabalho.repository.ClienteRepository;
 import org.serratec.trabalho.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,42 +60,23 @@ public class PedidoService {
         }
         return null;
     }
-	
-//    //REVER !!!
-//	public PedidoDTO inserir(PedidoDTO pedidoInsDTO) throws EmailException{
-//		
-//		Pedido pedido = new Pedido();  
-//		/*
-//		pedido.setNome(pedidoInsDTO.getNome());
-//	
-//		pedido.setEmail(pedidoInsDTO.getEmail());
-//		*/
-//		pedido = pedidoRepository.save(pedido);
-//		
-//		return new PedidoDTO(pedido);
-//	}
-	
-	// Inserir novo Pedido
-//    public PedidoDTO inserir(PedidoDTO pedidoDTO) {
-//        Pedido pedido = toEntity(pedidoDTO);
-//        pedido = pedidoRepository.save(pedido);
-//        return new PedidoDTO(pedido);
-//    }
     
-    //Inserir pedido por usuario
+    //Post pedido por usuario
     @Transactional
-    public PedidoDTO inserirPedidoUser(String email, PedidoDTO dto){
+    public PedidoDTOSimplificado inserirPedidoUser(String email, PedidoDTO dto){
     	Pedido pedido = new Pedido();
     	pedido.setCliente(clienteRepository.findByEmail(email).get());
     	
     	List<ItemPedido> itens = dto.getItens().stream().map(item -> {
 			ItemPedido itnPedido =  new ItemPedido();
 			//itnPedido.setPedido(pedido); testar pra ver se funfa sem :)
-			itnPedido.setQuantidade(item.getQuantidade());
-			
 			Produto produto = produtoService.buscarId(item.getProdutoId());
 			
 			itnPedido.setProduto(produto);
+			
+			itnPedido.setQuantidade(item.getQuantidade());
+			itnPedido.setValor(produto.getPreco().doubleValue());
+			
 			return itnPedido;
 		}).toList();
 				
@@ -102,10 +84,13 @@ public class PedidoService {
 		
 		//setar o Status
 		pedido.setStatus(StatusPedido.RECEBIDO);
+		
 		pedido.calcularTotalPedido();
 		
 		pedido = pedidoRepository.save(pedido);
-        return new PedidoDTO(pedido);
+		
+		
+        return new PedidoDTOSimplificado(pedido);
     }
 
 	// Deletar Pedido
