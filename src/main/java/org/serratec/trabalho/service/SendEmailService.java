@@ -37,7 +37,7 @@ public class SendEmailService {
 					        Com carinho, <br>
 					        Equipe Div das Plantas
 					    </p>
-					    <img src="https://i.postimg.cc/7L4r9wpH/Imagem-do-Whats-App-de-2025-05-29-s-18-34-01-705eab7c.jpg" alt="Imagem do Cadastro" width="250" style="margin: 20px auto; display: block; border-radius: 15px;">
+					    <img src="https://i.postimg.cc/CKWDv0q1/Imagem-do-Whats-App-de-2025-05-29-s-18-34-03-0d1dc548.jpg" alt="Imagem do Cadastro" width="250" style="margin: 20px auto; display: block; border-radius: 15px;">
 					    <p style="font-size: 12px; color: #888;">Obrigado por usar nosso sistema! <br> </p>
 					</body>
 					</html>
@@ -75,7 +75,7 @@ public class SendEmailService {
 							Com ternura,  <br>
 							Equipe Div das Plantas 🌸
 						</p>
-						<img src="https://i.postimg.cc/ZKNtk4cf/Imagem-do-Whats-App-de-2025-05-29-s-18-34-03-833a7abc.jpg" alt="Imagem do Remoção de conta" width="300" style="margin: 20px auto; display: block; border-radius: 15px;">
+						<img src="https://i.postimg.cc/1XYyHm87/Imagem-do-Whats-App-de-2025-05-29-s-18-34-03-bb7e3e71.jpg" alt="Imagem do Remoção de conta" width="300" style="margin: 20px auto; display: block; border-radius: 15px;">
 						<p style="font-size: 12px; color: #888;">Esperamos que tenha aproveitado o nosso sistema! <br> </p>
 					</body>
 					</html>
