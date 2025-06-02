@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.serratec.trabalho.domain.EnderecoViaCep;
 import org.serratec.trabalho.dto.ClienteDTO;
+import org.serratec.trabalho.dto.PedidoDTO;
 import org.serratec.trabalho.security.JwtUtil;
 import org.serratec.trabalho.service.ClienteService;
+import org.serratec.trabalho.service.PedidoService;
 import org.serratec.trabalho.service.SendEmailService;
 import org.serratec.trabalho.service.ViacepApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class ClienteController {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private PedidoService pedidoService;
 	
 	@Autowired
 	private SendEmailService emailService;
@@ -64,7 +69,23 @@ public class ClienteController {
 		return ResponseEntity.ok(cliente);
 	}
 	
-	//Qualquer pessoa
+	//Todos os pedidos daquele cliente
+	@GetMapping("/me/pedidos")
+	public ResponseEntity<List<PedidoDTO>> getMeusPedidos(@RequestHeader("Authorization") String authHeader){
+		String token = authHeader.replace("Bearer ", "");
+		String email = jwtUtil.extractUsername(token);
+		
+		List<PedidoDTO> pedidosDTO = pedidoService.BuscarPedidosUser(email);
+		
+		if(pedidosDTO.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(pedidosDTO);
+		
+	}
+	
+	//Qualquer pessoa(Cadastro)
 	@PostMapping
 	public ResponseEntity<ClienteDTO> inserir(@RequestBody ClienteDTO clienteInsDTO){
 		
@@ -81,6 +102,19 @@ public class ClienteController {
 		emailService.SendEmailCadastrado(clienteInsDTO.getEmail(), "Cadastro realizado com sucesso!", clienteInsDTO.getNome());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteInsDTO);
+	}
+	
+	//Post de pedido
+	@PostMapping("/me/pedidos")
+	public ResponseEntity<PedidoDTO> inserir(
+			@RequestHeader("Authorization") String authHeader,
+			@RequestBody PedidoDTO pedidoInsDTO){
+		
+		String token = authHeader.replace("Bearer ", "");
+		String email = jwtUtil.extractUsername(token);
+		
+		PedidoDTO pedidoDTO = pedidoService.inserirPedidoUser(email, pedidoInsDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDTO);
 	}
 	
 	//Para user logado

@@ -1,6 +1,5 @@
 package org.serratec.trabalho.domain;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -28,12 +28,13 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status;
 
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pedido_id")
 	private List<ItemPedido> itens = new ArrayList<>();
 
-	private BigDecimal totalPedidoSemDesconto = BigDecimal.ZERO;
+	private Double totalPedido;
 
-	private BigDecimal desconto = BigDecimal.ZERO;
+	private int desconto = 10;
 
 	private LocalDateTime dataCriacao;
 
@@ -43,22 +44,17 @@ public class Pedido {
 	}
 
 	public void calcularTotalPedido() {
-		totalPedidoSemDesconto = itens.stream().map(ItemPedido::getSubtotal).reduce(BigDecimal.ZERO, BigDecimal::add);
-	}
-
-	public void calcularDesconto(BigDecimal percentual) {
-		if (totalPedidoSemDesconto.compareTo(BigDecimal.ZERO) == 0) {
-			calcularTotalPedido();
-		}
-		desconto = totalPedidoSemDesconto.multiply(percentual).divide(BigDecimal.valueOf(100));
-	}
-
-	public BigDecimal getTotalComDesconto() {
-		return totalPedidoSemDesconto.subtract(desconto);
+		
+		double subTotal = itens.stream()
+				.mapToDouble((ItemPedido::getSubtotal))
+				.sum();
+				
+		this.totalPedido = subTotal - (subTotal * (desconto / 100));
+		
 	}
 
 	public Pedido() {
-
+		setDataCriacao();
 	}
 
 	public Pedido(Long id, Cliente cliente, StatusPedido status, List<ItemPedido> itens) {
@@ -105,4 +101,21 @@ public class Pedido {
 		return dataCriacao;
 	}
 
+	public Double getTotalPedido() {
+		return totalPedido;
+	}
+
+	public void setTotalPedido(Double totalPedido) {
+		this.totalPedido = totalPedido;
+	}
+
+	public int getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(int desconto) {
+		this.desconto = desconto;
+	}
+	
+	
 }

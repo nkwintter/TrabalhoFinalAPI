@@ -42,6 +42,7 @@ public class ProdutoService {
         return produtoOpt.orElse(null);
     }
     
+    //Produto por categoria
     public List<ProdutoDTO> findByCategoriaId(Long id) {
     	List<Produto> produtos = produtoRepository.findAll();
     	List<ProdutoDTO> produtosDTO = produtos.stream()
@@ -84,7 +85,7 @@ public class ProdutoService {
     }
 
     // Conversão DTO -> Entidade
-    private Produto toEntity(ProdutoDTO dto) {
+    public Produto toEntity(ProdutoDTO dto) {
         Produto produto = new Produto();
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());

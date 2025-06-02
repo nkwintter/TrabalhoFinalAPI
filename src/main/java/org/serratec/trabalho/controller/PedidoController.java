@@ -22,6 +22,7 @@ public class PedidoController {
 	@Autowired
 	private PedidoService pedidoService;
 	
+	//Para ADM
 	@GetMapping
 	public ResponseEntity<List<PedidoDTO>> listar(){
 		return ResponseEntity.ok(pedidoService.buscarTodos());
@@ -33,11 +34,12 @@ public class PedidoController {
 		return ResponseEntity.ok(dto);
 	}
 	
-	@PostMapping
-	public ResponseEntity<PedidoDTO> inserir(@RequestBody PedidoDTO pedidoInsDTO){
-		PedidoDTO pedidoDTO = pedidoService.inserir(pedidoInsDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDTO);
-	}
+//	@PostMapping
+//	Em standBy !
+//	public ResponseEntity<PedidoDTO> inserir(@RequestBody PedidoDTO pedidoInsDTO){
+//		PedidoDTO pedidoDTO = pedidoService.inserir(pedidoInsDTO);
+//		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDTO);
+//	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletar(@PathVariable Long id){

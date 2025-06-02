@@ -1,12 +1,12 @@
 package org.serratec.trabalho.domain;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
 
 @Entity
 public class ItemPedido {
@@ -14,17 +14,15 @@ public class ItemPedido {
     private Long id;
 
     @ManyToOne
-    private Pedido pedido;
-
-    @ManyToOne
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 
     private int quantidade;
     
-    private BigDecimal valor;
+    private double valor;
     
-    public BigDecimal getSubtotal() {
-        return valor.multiply(new BigDecimal(quantidade)); //o new serve para converter o int para bigdecimal
+    public double getSubtotal() {
+    	return valor * quantidade;
     }
 
     public Long getId() {
@@ -33,14 +31,6 @@ public class ItemPedido {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Pedido getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
     }
 
     public Produto getProduto() {
@@ -59,11 +49,11 @@ public class ItemPedido {
         this.quantidade = quantidade;
     }
 
-    public BigDecimal getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 }
