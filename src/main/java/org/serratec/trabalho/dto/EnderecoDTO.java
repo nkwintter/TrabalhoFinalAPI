@@ -22,6 +22,7 @@ public class EnderecoDTO {
 	public EnderecoDTO(EnderecoCliente endereco) {
         this.cep = endereco.getCep();
         this.logradouro = endereco.getLogradouro();
+        this.complemento = endereco.getComplemeto();
         this.localidade = endereco.getLocalidade();
         this.bairro = endereco.getBairro();
         this.uf = endereco.getUf();
