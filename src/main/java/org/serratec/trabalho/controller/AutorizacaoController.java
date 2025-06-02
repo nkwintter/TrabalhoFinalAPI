@@ -34,6 +34,7 @@ public class AutorizacaoController {
             String email = auth.getName(); 
 
             String token = jwtUtil.generateToken(email);
+            
             return ResponseEntity.ok(new LoginResponse(token));
             
         } catch (AuthenticationException e) {

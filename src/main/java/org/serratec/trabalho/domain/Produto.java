@@ -21,6 +21,7 @@ public class Produto {
     @ManyToOne
     private Categoria categoria;
     
+    @NotBlank(message = "O preço não pode ser vazio!")
     @Positive(message = "O preço deve ser positivo!")
     private BigDecimal preco;
 

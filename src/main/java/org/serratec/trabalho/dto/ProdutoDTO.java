@@ -15,7 +15,8 @@ public class ProdutoDTO {
 
 	@NotBlank
 	private BigDecimal preco;
-
+	
+	@NotBlank
 	private CategoriaDTO categoria;
 	
 	public ProdutoDTO(Produto produto) {
