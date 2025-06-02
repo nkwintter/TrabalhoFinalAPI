@@ -19,6 +19,8 @@ public class EnderecoCliente {
 	@NotBlank(message = "O bairro deve ser preenchida!")
 	private String bairro;
 	
+	private String complemeto;
+	
 	@NotBlank(message = "O estado deve ser preenchido!")
 	@Size(min = 2, max = 2, message = "A sigla do estado deve conter somente 2 letras!")
 	private String uf;
@@ -66,4 +68,14 @@ public class EnderecoCliente {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
+
+	public String getComplemeto() {
+		return complemeto;
+	}
+
+	public void setComplemeto(String complemeto) {
+		this.complemeto = complemeto;
+	}
+	
+	
 }

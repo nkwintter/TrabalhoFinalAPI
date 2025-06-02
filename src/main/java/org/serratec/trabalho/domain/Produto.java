@@ -8,19 +8,23 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Produto {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @NotBlank(message = "O nome não pode ser vazio!")
     private String nome;
     
+    @NotNull
     @ManyToOne
     private Categoria categoria;
     
+    @NotNull(message = "O preço não pode ser vazio!")
     @Positive(message = "O preço deve ser positivo!")
     private BigDecimal preco;
 

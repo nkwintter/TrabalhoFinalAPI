@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -75,10 +76,21 @@ public class ProdutoController {
 		return ResponseEntity.ok(dto);
 	}
 	
+	@GetMapping("/categoria")
+	public ResponseEntity<List<ProdutoDTO>> listByCategory(@RequestParam Long idCategoria){
+		List<ProdutoDTO> produtosDTO = produtoService.findByCategoriaId(idCategoria);
+		
+		if(!produtosDTO.isEmpty()) {
+			return ResponseEntity.ok(produtosDTO);
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+	
 	@PostMapping
-	public  ResponseEntity<ProdutoDTO> inserir(@RequestBody @Valid ProdutoDTO produtoInsDTO) {
-		ProdutoDTO produtoDTO = produtoService.inserir(produtoInsDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).body(produtoDTO);
+	public ResponseEntity<ProdutoDTO> inserir(@RequestBody @Valid ProdutoDTO produtoInsDTO) {
+		produtoInsDTO = produtoService.inserir(produtoInsDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(produtoInsDTO);
 	}
 	
 	@PutMapping("/{id}")

@@ -10,6 +10,8 @@ import org.serratec.trabalho.domain.EnderecoViaCep;
 import org.serratec.trabalho.dto.ClienteDTO;
 import org.serratec.trabalho.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +19,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Buscar todos os clientes
     public List<ClienteDTO> buscarTodos() {
@@ -36,55 +41,70 @@ public class ClienteService {
         }
         return null;
     }
-
-    // Inserir novo cliente
-    public ClienteDTO inserir(ClienteDTO clienteDTO) {
-        Cliente cliente = toEntity(clienteDTO);
-        cliente = clienteRepository.save(cliente);
-        return new ClienteDTO(cliente);
-    }
-
-    // Atualizar cliente
-    public ClienteDTO atualizar(Long id, ClienteDTO clienteDTO) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+    
+ // Buscar cliente por email
+    public ClienteDTO FindByEmail(String email) {
+        Optional<Cliente> clienteOpt = clienteRepository.findByEmail(email);
         if (clienteOpt.isPresent()) {
-            Cliente cliente = clienteOpt.get();
-            cliente.setNome(clienteDTO.getNome());
-            cliente.setEmail(clienteDTO.getEmail());
-            cliente.setCpf(clienteDTO.getCpf());
-            cliente.setTelefone(clienteDTO.getTelefone());
-
-            if (clienteDTO.getEndereco() != null) {
-                String novoCep = clienteDTO.getEndereco().getCep();
-                EnderecoViaCep enderecoApi = ViacepApiService.consultarViaCep(novoCep); 
-                EnderecoCliente end = new EnderecoCliente();
-                end.setCep(novoCep);
-                end.setBairro(enderecoApi.getBairro());
-                end.setLocalidade(enderecoApi.getLocalidade());
-                end.setLogradouro(enderecoApi.getLogradouro());
-                end.setUf(enderecoApi.getUf());
-                cliente.setEndereco(end);
-            }
-
-            cliente = clienteRepository.save(cliente);
-            return new ClienteDTO(cliente);
+            return new ClienteDTO(clienteOpt.get());
         }
         return null;
     }
 
-    // Deletar cliente
-    public void deleteById(Long id) {
-        clienteRepository.deleteById(id);
+    // Inserir novo cliente
+    public ClienteDTO inserir(ClienteDTO clienteDTO) {
+        Cliente cliente = toEntity(clienteDTO);
+        
+        cliente = clienteRepository.save(cliente);
+        return new ClienteDTO(cliente);
+    }
+    
+    //REVISAR COM IF'S PARA EVITAR O REPREENCHIMENTO TOTAL !!!
+    public ClienteDTO updateByEmail(String email, ClienteDTO dto) {
+    	Cliente cliente = clienteRepository.findByEmail(email)
+    			.orElseThrow(() -> new RuntimeException("Cliente não encontrado!"));
+    	
+    	cliente.setNome(dto.getNome());
+        cliente.setEmail(dto.getEmail());
+        cliente.setCpf(dto.getCpf());
+        cliente.setTelefone(dto.getTelefone());
+        cliente.setSenha(new BCryptPasswordEncoder().encode(dto.getSenha()));
+        cliente.setRole("USER");
+
+        if (dto.getEndereco() != null) {
+            String novoCep = dto.getEndereco().getCep();
+            EnderecoViaCep enderecoApi = ViacepApiService.consultarViaCep(novoCep); 
+            EnderecoCliente end = new EnderecoCliente();
+            end.setCep(novoCep);
+            end.setBairro(enderecoApi.getBairro());
+            end.setLocalidade(enderecoApi.getLocalidade());
+            end.setLogradouro(enderecoApi.getLogradouro());
+            end.setUf(enderecoApi.getUf());
+            cliente.setEndereco(end);
+            cliente.getEndereco().setComplemeto(dto.getEndereco().getComplemento());
+        }
+        
+        cliente = clienteRepository.save(cliente);
+        return new ClienteDTO(cliente);
+    	
+    }
+    
+    public void deleteByEmail(String email) {
+    	Cliente cliente = clienteRepository.findByEmail(email)
+    			.orElseThrow(() -> new RuntimeException("Cliente não encontrado!"));
+    	
+    	clienteRepository.delete(cliente);
     }
 
     // Conversão DTO -> Entidade
     private Cliente toEntity(ClienteDTO dto) {
         Cliente cliente = new Cliente();
-        cliente.setId(dto.getId());
         cliente.setNome(dto.getNome());
         cliente.setTelefone(dto.getTelefone());
         cliente.setCpf(dto.getCpf());
         cliente.setEmail(dto.getEmail());
+        cliente.setSenha(passwordEncoder.encode(dto.getSenha()));
+        cliente.setRole("USER");
 
         if (dto.getEndereco() != null) {
             EnderecoCliente end = new EnderecoCliente();

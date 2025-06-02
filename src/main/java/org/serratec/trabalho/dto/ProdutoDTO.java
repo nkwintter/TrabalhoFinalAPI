@@ -5,20 +5,23 @@ import java.math.BigDecimal;
 import org.serratec.trabalho.domain.Produto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class ProdutoDTO {
 		
 	private Long id;
 
-	@NotBlank
+	
 	private String nome;
 
-	@NotBlank
+	
 	private BigDecimal preco;
-
+	
+	
 	private CategoriaDTO categoria;
 	
 	public ProdutoDTO(Produto produto) {
+		this.id = produto.getId();
         this.nome = produto.getNome();
         this.preco = produto.getPreco();
         if (produto.getCategoria() != null) {
