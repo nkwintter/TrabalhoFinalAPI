@@ -41,6 +41,16 @@ public class ProdutoService {
     	Optional<Produto> produtoOpt = produtoRepository.findById(id);
         return produtoOpt.orElse(null);
     }
+    
+    public List<ProdutoDTO> findByCategoriaId(Long id) {
+    	List<Produto> produtos = produtoRepository.findAll();
+    	List<ProdutoDTO> produtosDTO = produtos.stream()
+    			.filter(produto -> produto.getCategoria() != null && produto.getCategoria().getId().equals(id))
+    			.map(ProdutoDTO :: new)
+    			.toList();
+    			
+    	return produtosDTO;		
+    }
 
     // Inserir novo produto
     public ProdutoDTO inserir(ProdutoDTO produtoDTO) {

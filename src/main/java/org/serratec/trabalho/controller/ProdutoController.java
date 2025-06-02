@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -73,6 +74,17 @@ public class ProdutoController {
 	public ResponseEntity<ProdutoDTO> buscar(@PathVariable Long id) {
 		ProdutoDTO dto = produtoService.buscar(id);
 		return ResponseEntity.ok(dto);
+	}
+	
+	@GetMapping("/categoria")
+	public ResponseEntity<List<ProdutoDTO>> listByCategory(@RequestParam Long idCategoria){
+		List<ProdutoDTO> produtosDTO = produtoService.findByCategoriaId(idCategoria);
+		
+		if(!produtosDTO.isEmpty()) {
+			return ResponseEntity.ok(produtosDTO);
+		}
+		
+		return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
