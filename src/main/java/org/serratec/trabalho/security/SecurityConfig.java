@@ -47,9 +47,13 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "categorias").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "categorias/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "categorias/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "avaliacoes/**").hasRole("USER")
+                .requestMatchers(HttpMethod.GET, "avaliacoes/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "avaliacoes/**").hasRole("USER")
+                .requestMatchers(HttpMethod.DELETE, "avaliacoes/**").hasRole("USER")
                 .anyRequest().authenticated()
             )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)) //  <-> ".ALWAYS" para testes
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //  <-> ".ALWAYS" para testes
             .headers(headers -> headers.frameOptions().sameOrigin())
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
