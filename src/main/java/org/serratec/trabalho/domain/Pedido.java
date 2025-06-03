@@ -34,6 +34,8 @@ public class Pedido {
 	@JoinColumn(name = "pedido_id")
 	private List<ItemPedido> itens = new ArrayList<>();
 	
+	private String notaFiscal;
+	
 	private double totalSemDesconto;
 
 	private double totalPedido;
@@ -132,6 +134,14 @@ public class Pedido {
 
 	public void setTotalSemDesconto(double totalSemDesconto) {
 		this.totalSemDesconto = totalSemDesconto;
+	}
+
+	public String getNotaFiscal() {
+		return notaFiscal;
+	}
+
+	public void setNotaFiscal(String notaFiscal) {
+		this.notaFiscal = notaFiscal;
 	}
 	
 	

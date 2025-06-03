@@ -1007,3 +1007,6 @@ insert into pedido (cliente_id,data_criacao,desconto,status,total_pedido,total_s
 2025-06-02 21:06:41.617465-03:00 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PITEM_PEDIDO" not found; SQL statement:
 SELECT * FROM PITEM_PEDIDO [42102-232]
+2025-06-03 14:40:24.124943-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITEM_PRODUTO" not found; SQL statement:
+SELECT * FROM ITEM_PRODUTO [42102-232]

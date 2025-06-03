@@ -92,6 +92,35 @@ Sempre que um cliente se registra, fazemos uma chamada à API do ViaCEP para gar
 
 ---
 
+## 💐 Partes Individuais: Feitas com carinho pelos nossos jardineiros
+
+### 🌼 Avaliações de Produtos - Pela jardineira: Julya Werneck 🌷
+Permite que clientes que compraram um produto deixem sua opinião sincera sobre ele. Cada planta merece seu momento de feedback! 🌿✨  
+Somente clientes que realmente cultivaram a plantinha (ou seja, compraram o produto) podem avaliá-la.
+
+🌟 **Rotas das Avaliações:**
+
+- **GET /avaliacoes** — Lista todas as avaliações do jardim  
+- **GET /avaliacoes/{id}** — Mostra uma avaliação específica colhida com carinho  
+- **POST /avaliacoes** — Planta uma nova avaliação (apenas para quem já cultivou 🌱)  
+- **PUT /avaliacoes/{id}** — Rega uma avaliação existente com novas palavras  
+- **DELETE /avaliacoes/{id}** — Remove uma avaliação seca do jardim
+
+### 💌 Lista de Desejos - Pela jardineira: Lívia Raissinger 🌻
+Porque todo jardineiro também sonha com a próxima plantinha, né? 🌱✨
+A *lista de desejos* permite que clientes armazenem produtos que desejam adquirir futuramente. Ela é vinculada ao cliente e gerenciada automaticamente pela aplicação. Se ainda não existir, a lista é criada na primeira interação do cliente com esse recurso.
+Os produtos adicionados à lista não se repetem, garantindo integridade e organização. As respostas da API trazem dados úteis sobre os itens, como nome, preço e categoria — tudo para cultivar a melhor experiência.
+Assim, mesmo o que ainda não foi comprado já começa a florir no sistema 🌸💻
+
+
+🌟 **Rotas da Lista de Desejos:**
+
+- **GET /DivDasPlantas/listadesejos/{clienteId}** — Mostra todos os produtos desejados por um cliente específico.
+- **POST /DivDasPlantas/listadesejos/{clienteId}/produtos/{produtoId}** — Adiciona um produto à lista de desejos do cliente, caso ainda não esteja nela.
+- **DELETE /DivDasPlantas/listadesejos/{clienteId}/produtos/{produtoId}** —Remove um produto específico da lista do cliente, com retorno personalizado indicando qual plantinha foi retirada.
+- **DELETE /DivDasPlantas/listadesejos/{clienteId}/limpar** — Remove todos os produtos da lista de desejos do cliente, deixando o espaço livre para novas vontades brotarem 🌾
+  
+---
 ## 💚 Time Jardineiro
 
 Desenvolvido com carinho e muitos `commits` pelos devs:

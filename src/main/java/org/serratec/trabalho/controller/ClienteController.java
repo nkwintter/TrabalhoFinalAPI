@@ -43,18 +43,15 @@ public class ClienteController {
 	private PedidoService pedidoService;
 	
 	@Autowired
-	private SendEmailService emailService;
-	
-	@Autowired
 	private JwtUtil jwtUtil;
 	
 	//Todos os pedidos daquele cliente
 	@GetMapping("/me/pedidos")
-	public ResponseEntity<List<PedidoDTO>> getMeusPedidos(@RequestHeader("Authorization") String authHeader){
+	public ResponseEntity<List<PedidoDTOSimplificado>> getMeusPedidos(@RequestHeader("Authorization") String authHeader){
 		String token = authHeader.replace("Bearer ", "");
 		String email = jwtUtil.extractUsername(token);
 		
-		List<PedidoDTO> pedidosDTO = pedidoService.BuscarPedidosUser(email);
+		List<PedidoDTOSimplificado> pedidosDTO = pedidoService.BuscarPedidosUser(email);
 		
 		if(pedidosDTO.isEmpty()) {
 			return ResponseEntity.notFound().build();
@@ -142,10 +139,6 @@ public class ClienteController {
         clienteInsDTO.getEndereco().setUf(enderecoapi.getUf());
 
         clienteInsDTO = clienteService.inserir(clienteInsDTO);
-
-        // envio do email
-        emailService.SendEmailCadastrado(clienteInsDTO.getEmail(), "Cadastro realizado com sucesso!",
-                clienteInsDTO.getNome());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteInsDTO);
     }
