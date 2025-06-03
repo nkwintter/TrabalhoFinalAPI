@@ -44,7 +44,7 @@ public class PedidoDTOSimplificado {
 
 		List<ItemPedidoDTO> itensDTO = itens.stream().map(item -> {
 			ItemPedidoDTO itnPedido = new ItemPedidoDTO();
-			itnPedido.setProdutoId(item.getId());
+			itnPedido.setProdutoId(item.getProduto().getId());
 			itnPedido.setNomeProduto(item.getProduto().getNome());
 			itnPedido.setValorProduto(item.getProduto().getPreco());
 			itnPedido.setQuantidade(item.getQuantidade());
