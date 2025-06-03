@@ -35,6 +35,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
             	.requestMatchers("/h2-console/**").permitAll()
             	.requestMatchers("/swagger-ui/**").permitAll()
+            	.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/webjars/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/clientes", "/auth").permitAll()
                 .requestMatchers(HttpMethod.GET, "/clientes/me/**").hasRole("USER")
                 .requestMatchers(HttpMethod.POST, "/clientes/me/**").hasRole("USER")
@@ -55,7 +56,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/pedidos/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //  <-> ".ALWAYS" para testes
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)) //  <-> ".ALWAYS" para testes
             .headers(headers -> headers.frameOptions().sameOrigin())
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
