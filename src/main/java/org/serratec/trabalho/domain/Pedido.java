@@ -1,9 +1,10 @@
 package org.serratec.trabalho.domain;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -12,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -28,13 +30,19 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status;
 
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pedido_id")
 	private List<ItemPedido> itens = new ArrayList<>();
+	
+	private String notaFiscal;
+	
+	private double totalSemDesconto;
 
-	private BigDecimal totalPedidoSemDesconto = BigDecimal.ZERO;
+	private double totalPedido;
 
-	private BigDecimal desconto = BigDecimal.ZERO;
-
+	private int desconto = 10;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataCriacao;
 
 	@PrePersist
@@ -43,22 +51,21 @@ public class Pedido {
 	}
 
 	public void calcularTotalPedido() {
-		totalPedidoSemDesconto = itens.stream().map(ItemPedido::getSubtotal).reduce(BigDecimal.ZERO, BigDecimal::add);
-	}
-
-	public void calcularDesconto(BigDecimal percentual) {
-		if (totalPedidoSemDesconto.compareTo(BigDecimal.ZERO) == 0) {
-			calcularTotalPedido();
+		double subTotal = 0;
+		
+		for(ItemPedido item : this.itens){
+			subTotal += item.getSubtotal();
 		}
-		desconto = totalPedidoSemDesconto.multiply(percentual).divide(BigDecimal.valueOf(100));
-	}
-
-	public BigDecimal getTotalComDesconto() {
-		return totalPedidoSemDesconto.subtract(desconto);
+		
+		this.totalSemDesconto = subTotal;
+				
+		this.totalPedido = subTotal - (subTotal * ((double)this.desconto / 100));
+		System.out.println(totalPedido);
+		
 	}
 
 	public Pedido() {
-
+		setDataCriacao();
 	}
 
 	public Pedido(Long id, Cliente cliente, StatusPedido status, List<ItemPedido> itens) {
@@ -105,4 +112,37 @@ public class Pedido {
 		return dataCriacao;
 	}
 
+	public Double getTotalPedido() {
+		return totalPedido;
+	}
+
+	public void setTotalPedido(Double totalPedido) {
+		this.totalPedido = totalPedido;
+	}
+
+	public int getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(int desconto) {
+		this.desconto = desconto;
+	}
+
+	public double getTotalSemDesconto() {
+		return totalSemDesconto;
+	}
+
+	public void setTotalSemDesconto(double totalSemDesconto) {
+		this.totalSemDesconto = totalSemDesconto;
+	}
+
+	public String getNotaFiscal() {
+		return notaFiscal;
+	}
+
+	public void setNotaFiscal(String notaFiscal) {
+		this.notaFiscal = notaFiscal;
+	}
+	
+	
 }

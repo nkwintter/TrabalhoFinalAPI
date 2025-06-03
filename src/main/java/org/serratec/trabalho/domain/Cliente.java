@@ -30,32 +30,37 @@ public class Cliente {
     @Size(min = 10, max = 15, message = "O telefone deve ter entre 10 e 15 caracteres.")
     @Pattern(regexp = "^[0-9+()\\-\\s]*$", message = "Telefone inválido. Por favor, verifique o número informado.")
     private String telefone;
+    private String role;
     
 	@Email(message = "E-mail inválido.")
 	@NotBlank(message = "O e-mail é obrigatório.") 
     private String email;
+	
+	 @NotBlank(message = "A senha não pode ser vazia")
+	    private String senha;
     
 	@CPF(message = "CPF inválido.")
 	@NotBlank(message = "O CPF é obrigatório.") 
     private String cpf;
     
-    @NotNull(message = "O endereço é obrigatório.")
+	
+	@NotNull(message = "O endereço é obrigatório.")
 	@Embedded
 	@Valid
 	private EnderecoCliente endereco;
     
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private ListaDesejos listaDesejos;
+	  @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+	    private ListaDesejos listaDesejos;
 
-    
+	    
 
-	public ListaDesejos getListaDesejos() {
-		return listaDesejos;
-	}
+		public ListaDesejos getListaDesejos() {
+			return listaDesejos;
+		}
 
-	public void setListaDesejos(ListaDesejos listaDesejos) {
-		this.listaDesejos = listaDesejos;
-	}
+		public void setListaDesejos(ListaDesejos listaDesejos) {
+			this.listaDesejos = listaDesejos;
+		}
 
 	public Long getId() {
 		return id;
@@ -104,4 +109,22 @@ public class Cliente {
 	public void setEndereco(EnderecoCliente endereco) {
 		this.endereco = endereco;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	
 }

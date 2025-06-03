@@ -1,28 +1,30 @@
 package org.serratec.trabalho.domain;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Produto {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank(message = "O nome é obrigatório.")
+    @NotBlank(message = "O nome não pode ser vazio!")
     private String nome;
     
+    @NotNull
     @ManyToOne
     private Categoria categoria;
     
+    @NotNull(message = "O preço não pode ser vazio!")
     @Positive(message = "O preço deve ser positivo!")
-    private BigDecimal preco;
+    private double preco;
 
 	public Long getId() {
 		return id;
@@ -48,11 +50,11 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	public BigDecimal getPreco() {
+	public double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
 }

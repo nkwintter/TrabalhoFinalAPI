@@ -5,16 +5,19 @@ import java.math.BigDecimal;
 import org.serratec.trabalho.domain.Produto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class ProdutoDTO {
 		
 	private Long id;
 
-	@NotBlank
+	
 	private String nome;
 
-	private BigDecimal preco;
-
+	
+	private double preco;
+	
+	
 	private CategoriaDTO categoria;
 	
 	public ProdutoDTO(Produto produto) {
@@ -46,11 +49,11 @@ public class ProdutoDTO {
 		this.nome = nome;
 	}
 
-	public BigDecimal getPreco() {
+	public double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
 

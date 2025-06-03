@@ -3,6 +3,7 @@ package org.serratec.trabalho.dto;
 import java.util.List;
 
 import org.serratec.trabalho.domain.Cliente;
+import org.serratec.trabalho.domain.ItemPedido;
 import org.serratec.trabalho.domain.Pedido;
 
 public class PedidoDTO {
@@ -19,6 +20,23 @@ public class PedidoDTO {
         this.id = pedido.getId();
         this.cliente = pedido.getCliente();
         this.status = pedido.getStatus().toString();
+        this.itens = toDTO(pedido.getItens());
+    }
+    
+    public void PedidoDTOSimplificado(Pedido pedido){
+        
+    }
+    
+    public List<ItemPedidoDTO> toDTO(List<ItemPedido> itens){
+    	
+    	List<ItemPedidoDTO> itensDTO = itens.stream().map(item -> {
+			ItemPedidoDTO itnPedido =  new ItemPedidoDTO();
+			itnPedido.setProdutoId(item.getId());
+			itnPedido.setQuantidade(item.getQuantidade());
+			return itnPedido;
+		}).toList();
+    	
+    	return itensDTO;
     }
 	
 	public PedidoDTO() {
@@ -56,7 +74,4 @@ public class PedidoDTO {
 	public void setItens(List<ItemPedidoDTO> itens) {
 		this.itens = itens;
 	}
-
-	
-
 }

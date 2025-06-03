@@ -1,29 +1,17 @@
 package org.serratec.trabalho.dto;
 
-import java.math.BigDecimal;
-
 public class ItemPedidoDTO {
 
-	private Long id;
-	
 	private Long produtoId;
+	
+	private String nomeProduto;
+	
+	private Double valorProduto;
 	
 	private Integer quantidade;
 	
-	private BigDecimal valorVenda;
-	
-	private Double desconto;
-	
 	public ItemPedidoDTO(){
 		
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Long getProdutoId() {
@@ -42,20 +30,21 @@ public class ItemPedidoDTO {
 		this.quantidade = quantidade;
 	}
 
-	public BigDecimal getValorVenda() {
-		return valorVenda;
+	public String getNomeProduto() {
+		return nomeProduto;
 	}
 
-	public void setValorVenda(BigDecimal valorVenda) {
-		this.valorVenda = valorVenda;
+	public void setNomeProduto(String nomeProduto) {
+		this.nomeProduto = nomeProduto;
 	}
 
-	public Double getDesconto() {
-		return desconto;
+	public Double getValorProduto() {
+		return valorProduto;
 	}
 
-	public void setDesconto(Double desconto) {
-		this.desconto = desconto;
+	public void setValorProduto(Double valorProduto) {
+		this.valorProduto = valorProduto;
 	}
+	
 	
 }
