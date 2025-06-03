@@ -22,6 +22,9 @@ public class ClienteService {
     
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private SendEmailService emailService;
 
     // Buscar todos os clientes
     public List<ClienteDTO> buscarTodos() {
@@ -55,6 +58,9 @@ public class ClienteService {
     public ClienteDTO inserir(ClienteDTO clienteDTO) {
         Cliente cliente = toEntity(clienteDTO);
         
+        emailService.SendEmailCadastrado(cliente.getEmail(), "Cadastro realizado com sucesso!",
+                cliente.getNome());
+        
         cliente = clienteRepository.save(cliente);
         return new ClienteDTO(cliente);
     }
@@ -84,6 +90,9 @@ public class ClienteService {
             cliente.getEndereco().setComplemeto(dto.getEndereco().getComplemento());
         }
         
+        emailService.SendEmailUpdate(cliente.getEmail(), "Cadastro realizado com sucesso!",
+                cliente.getNome());
+        
         cliente = clienteRepository.save(cliente);
         return new ClienteDTO(cliente);
     	
@@ -92,6 +101,9 @@ public class ClienteService {
     public void deleteByEmail(String email) {
     	Cliente cliente = clienteRepository.findByEmail(email)
     			.orElseThrow(() -> new RuntimeException("Cliente não encontrado!"));
+    	
+    	emailService.SendEmailRemovido(cliente.getEmail(), "Cadastro realizado com sucesso!",
+                cliente.getNome());
     	
     	clienteRepository.delete(cliente);
     }

@@ -44,16 +44,15 @@ public class PedidoService {
 		return pedidosDTO;
 	}
 	
-	public List<PedidoDTO> BuscarPedidosUser(String email){
+	public List<PedidoDTOSimplificado> BuscarPedidosUser(String email){
 		
 		List<Pedido> pedidos = pedidoRepository.findAll();
 		
-		List<PedidoDTO> pedidosDTO = pedidos.stream()
+		return pedidos.stream()
 				.filter(pedido -> pedido.getCliente() != null && pedido.getCliente().getEmail().equals(email))
-				.map(PedidoDTO :: new)
+				.map(PedidoDTOSimplificado :: new)
 				.toList();
 		
-		return pedidosDTO;
 	}
 	
 	// Buscar pedido por ID
