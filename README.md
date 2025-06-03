@@ -92,6 +92,21 @@ Sempre que um cliente se registra, fazemos uma chamada à API do ViaCEP para gar
 
 ---
 
+## 💐 Partes Individuais: Feitas com carinho pelos nossos jardineiros
+
+### 🌼 Avaliações de Produtos - Pela jardineira: Julya Werneck 🌷
+Permite que clientes que compraram um produto deixem sua opinião sincera sobre ele. Cada planta merece seu momento de feedback! 🌿✨  
+Somente clientes que realmente cultivaram a plantinha (ou seja, compraram o produto) podem avaliá-la.
+
+🌟 **Rotas das Avaliações:**
+
+- **GET /avaliacoes** — Lista todas as avaliações do jardim  
+- **GET /avaliacoes/{id}** — Mostra uma avaliação específica colhida com carinho  
+- **POST /avaliacoes** — Planta uma nova avaliação (apenas para quem já cultivou 🌱)  
+- **PUT /avaliacoes/{id}** — Rega uma avaliação existente com novas palavras  
+- **DELETE /avaliacoes/{id}** — Remove uma avaliação seca do jardim
+  
+---
 ## 💚 Time Jardineiro
 
 Desenvolvido com carinho e muitos `commits` pelos devs:
