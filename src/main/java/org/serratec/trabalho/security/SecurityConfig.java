@@ -46,6 +46,14 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/produtos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/produtos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/pedidos").hasRole("USER")
+                .requestMatchers(HttpMethod.GET, "categorias/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "categorias").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "categorias/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "categorias/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "avaliacoes/**").hasRole("USER")
+                .requestMatchers(HttpMethod.GET, "avaliacoes/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "avaliacoes/**").hasRole("USER")
+                .requestMatchers(HttpMethod.DELETE, "avaliacoes/**").hasRole("USER")
                 .requestMatchers(HttpMethod.GET, "/categorias/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/categorias").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/categorias/**").hasRole("ADMIN")
@@ -57,7 +65,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/pedidos/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)) //  <-> ".ALWAYS" para testes
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //  <-> ".ALWAYS" para testes
             .headers(headers -> headers.frameOptions().sameOrigin())
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
