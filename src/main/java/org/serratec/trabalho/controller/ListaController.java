@@ -25,32 +25,28 @@ public class ListaController {
         ListaDesejosDTO listaDTO = listaDesejosService.listarPorCliente(clienteId);
         return ResponseEntity.ok(listaDTO);
     }
-//sem msg personalizada, lista a lista:
-//    @PostMapping("/{clienteId}/produtos/{produtoId}")
-//    public ResponseEntity<ListaDesejosDTO> adicionarProduto(@PathVariable Long clienteId, @PathVariable Long produtoId) {
-//        listaDesejosService.adicionarProduto(clienteId, produtoId);
-//        return ResponseEntity.ok(listaDesejosService.listarPorCliente(clienteId));
-//    }
+    
     @PostMapping("/{clienteId}/produtos/{produtoId}")
     public ResponseEntity<String> adicionarProduto(@PathVariable Long clienteId, @PathVariable Long produtoId) {
         ListaDesejos lista = listaDesejosService.adicionarProduto(clienteId, produtoId);
         Produto ultimo = lista.getProdutos().get(lista.getProdutos().size() - 1);
-        String mensagem = "Produto: '" + ultimo.getNome() + "' adicionado com sucesso à sua lista de desejos!";
+        String mensagem = ultimo.getNome() + " foi adicionado(a) com sucesso à sua lista de desejos!";
   return ResponseEntity.ok(mensagem);
     }
     
-//    @DeleteMapping("/{clienteId}/produtos/{produtoId}")
-//    public ResponseEntity<ListaDesejosDTO> removerProduto(@PathVariable Long clienteId, @PathVariable Long produtoId) {
-//        listaDesejosService.removerProduto(clienteId, produtoId);
-//        return ResponseEntity.ok(listaDesejosService.listarPorCliente(clienteId));
-//    }
-
     @DeleteMapping("/{clienteId}/produtos/{produtoId}")
     public ResponseEntity<String> removerProduto(@PathVariable Long clienteId, @PathVariable Long produtoId) {
         ListaDesejos lista =listaDesejosService.removerProduto(clienteId, produtoId);
         Produto ultimo = lista.getProdutos().get(lista.getProdutos().size() - 1);
-        String mensagem = "Produto: '" + ultimo.getNome() + "' adicionado com sucesso à sua lista de desejos!";
+        String mensagem =ultimo.getNome() + " foi removido(a) com sucesso da sua lista de desejos.";
   return ResponseEntity.ok(mensagem);
     }
+    
+    @DeleteMapping("/{clienteId}/limpar")
+    public ResponseEntity<String> limparLista(@PathVariable Long clienteId) {
+        listaDesejosService.limparLista(clienteId);
+        return ResponseEntity.ok("Sua lista de desejos foi totalmente limpa com sucesso.");
+    }
+
 
 }

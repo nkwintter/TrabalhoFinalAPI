@@ -39,15 +39,8 @@ public class ListaService {
             return listaDesejoRepository.save(novaLista);
         }
     }
+    
 
-//    public ListaDesejos adicionarProduto(Long clienteId, Long produtoId) {
-//        ListaDesejos lista = buscarOuCriarLista(clienteId);
-//        Produto produto = produtoRepository.findById(produtoId)
-//        .orElseThrow(() -> new ListaDesejosException("Produto com o ID: " + produtoId+ "não encontrado"));
-//        if (!lista.getProdutos().contains(produto)) { lista.getProdutos().add(produto);return listaDesejoRepository.save(lista);
-//        }
-//        return lista;
-//    }
     public ListaDesejos adicionarProduto(Long clienteId, Long produtoId) {
         ListaDesejos lista = buscarOuCriarLista(clienteId);
         Produto produto = produtoRepository.findById(produtoId)
@@ -75,7 +68,8 @@ public class ListaService {
         }
     }
 
-    // Retorna a lista de desejos como DTO pq prciso mandar p front
+    
+    // Retorna a lista de desejos como DTO p mandar p front
     public ListaDesejosDTO listarPorCliente(Long clienteId) {
         ListaDesejos lista = buscarOuCriarLista(clienteId);
 
@@ -90,5 +84,22 @@ public class ListaService {
         dto.setListadedesejos(produtosDTO);
         return dto;
     }
+    
+    public void limparLista(Long clienteId) {
+        ListaDesejos lista = buscarOuCriarLista(clienteId);
+        lista.getProdutos().clear();
+        listaDesejoRepository.save(lista);
+    }
+    
+ // ---
+    public void verificarUsuario(Long clienteId, String emailClienteLogado) {
+        Cliente cliente = clienteRepository.findById(clienteId)
+            .orElseThrow(() -> new ListaDesejosException("Cliente não encontrado"));
+        
+        if (!cliente.getEmail().equals(emailClienteLogado)) {
+            throw new ListaDesejosException("Acesso não autorizado a esta lista de desejos");
+        }
+    }
+
     
 }

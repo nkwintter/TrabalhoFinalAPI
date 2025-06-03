@@ -3,10 +3,16 @@ package org.serratec.trabalho.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ListaDesejosDTO {
 	
     private Long id;
+    //data da ultima atualizacao feita na lista, utlima planta add
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime data;
+    @JsonIgnore
     private Long clienteId;
     private List<ProdutoDTO> listadedesejos;
     
