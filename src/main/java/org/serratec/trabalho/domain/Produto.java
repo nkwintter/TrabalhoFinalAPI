@@ -1,7 +1,5 @@
 package org.serratec.trabalho.domain;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +24,7 @@ public class Produto {
     
     @NotNull(message = "O preço não pode ser vazio!")
     @Positive(message = "O preço deve ser positivo!")
-    private BigDecimal preco;
+    private double preco;
 
 	public Long getId() {
 		return id;
@@ -52,11 +50,11 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	public BigDecimal getPreco() {
+	public double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
 }
