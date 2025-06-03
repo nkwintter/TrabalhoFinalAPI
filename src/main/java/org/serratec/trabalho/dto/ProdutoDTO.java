@@ -1,11 +1,6 @@
 package org.serratec.trabalho.dto;
 
-import java.math.BigDecimal;
-
 import org.serratec.trabalho.domain.Produto;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class ProdutoDTO {
 		
@@ -15,7 +10,7 @@ public class ProdutoDTO {
 	private String nome;
 
 	
-	private BigDecimal preco;
+	private double preco;
 	
 	
 	private CategoriaDTO categoria;
@@ -49,11 +44,11 @@ public class ProdutoDTO {
 		this.nome = nome;
 	}
 
-	public BigDecimal getPreco() {
+	public double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
 

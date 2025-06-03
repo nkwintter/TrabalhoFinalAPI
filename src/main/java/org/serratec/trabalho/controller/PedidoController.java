@@ -30,6 +30,7 @@ public class PedidoController {
 	@Autowired
 	private PedidoService pedidoService;
 	
+	//Para ADM
 	@GetMapping
 	@Operation(summary = "Lista todos os pedidos", description = "Retorna todos os pedidos realizados")
 	@ApiResponses(value = {
@@ -56,16 +57,18 @@ public class PedidoController {
 		return ResponseEntity.ok(dto);
 	}
 	
-	@PostMapping
-	@Operation(summary = "Cadastrar novo pedido", description = "Insere um novo pedido no banco de dados.")
-	@ApiResponses(value = {
-		@ApiResponse(responseCode = "201", description = "Pedido criado com sucesso"),
-		@ApiResponse(responseCode = "400", description = "Dados inválidos")
-	})
-	public ResponseEntity<PedidoDTO> inserir(@RequestBody PedidoDTO pedidoInsDTO){
-		PedidoDTO pedidoDTO = pedidoService.inserir(pedidoInsDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDTO);
-	}
+
+	// @PostMapping
+	// @Operation(summary = "Cadastrar novo pedido", description = "Insere um novo pedido no banco de dados.")
+	// @ApiResponses(value = {
+	// 	@ApiResponse(responseCode = "201", description = "Pedido criado com sucesso"),
+	// 	@ApiResponse(responseCode = "400", description = "Dados inválidos")
+	// })
+	// public ResponseEntity<PedidoDTO> inserir(@RequestBody PedidoDTO pedidoInsDTO){
+	//	PedidoDTO pedidoDTO = pedidoService.inserir(pedidoInsDTO);
+	// 	return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDTO);
+	//}
+
 	
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Excluir pedido", description = "Remove um pedido do banco de dados pelo ID.")

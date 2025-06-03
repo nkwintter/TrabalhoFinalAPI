@@ -28,7 +28,7 @@ public class SendEmailService {
 	        String msg = """
 	        		<html>
 	        		<body style="text-align: center; font-family: Arial, sans-serif;">
-					    <h2 style="color: #4CAF50;">Olá, %s! O mais novo Dev-verde!</h2>
+					    <h2 style="color: #4CAF50;">Olá, %s! O mais novo(a) Dev-verde!</h2>
 					    <p>
 					        Sua conta foi criada com sucesso no <strong style="color: #4CAF50;">Div das Plantas</strong> — agora você faz parte do nosso &lt;jardim&gt; cheio de código, clorofila e carinho. <br>
 					        Aqui, cada &lt;div&gt; é uma folha, cada commit é uma flor, e cada bug... bem, a gente poda rapidinho. 😉 <br>

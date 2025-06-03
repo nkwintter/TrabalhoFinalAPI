@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.serratec.trabalho.domain.EnderecoViaCep;
 import org.serratec.trabalho.dto.ClienteDTO;
+import org.serratec.trabalho.dto.PedidoDTO;
+import org.serratec.trabalho.dto.PedidoDTOSimplificado;
 import org.serratec.trabalho.security.JwtUtil;
 import org.serratec.trabalho.service.ClienteService;
+import org.serratec.trabalho.service.PedidoService;
 import org.serratec.trabalho.service.SendEmailService;
 import org.serratec.trabalho.service.ViacepApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +35,47 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/clientes")
 @Tag(name = "Clientes", description = "Endpoints para gerenciamento de clientes")
 public class ClienteController {
-
-    @Autowired
-    private ClienteService clienteService;
-
-    @Autowired
-    private SendEmailService emailService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+	
+	@Autowired
+	private ClienteService clienteService;
+	
+	@Autowired
+	private PedidoService pedidoService;
+	
+	@Autowired
+	private SendEmailService emailService;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
+	
+	//Todos os pedidos daquele cliente
+	@GetMapping("/me/pedidos")
+	public ResponseEntity<List<PedidoDTO>> getMeusPedidos(@RequestHeader("Authorization") String authHeader){
+		String token = authHeader.replace("Bearer ", "");
+		String email = jwtUtil.extractUsername(token);
+		
+		List<PedidoDTO> pedidosDTO = pedidoService.BuscarPedidosUser(email);
+		
+		if(pedidosDTO.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(pedidosDTO);
+		
+	}
+	
+	//Post de pedido
+	@PostMapping("/me/pedidos")
+	public ResponseEntity<PedidoDTOSimplificado> inserir(
+			@RequestHeader("Authorization") String authHeader,
+			@RequestBody PedidoDTO pedidoInsDTO){
+		
+		String token = authHeader.replace("Bearer ", "");
+		String email = jwtUtil.extractUsername(token);
+		
+		PedidoDTOSimplificado pedidoDTO = pedidoService.inserirPedidoUser(email, pedidoInsDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDTO);
+	}
 
     @GetMapping
     @Operation(summary = "Lista todos os clientes", description = "Retorna todos os clientes cadastrados")
