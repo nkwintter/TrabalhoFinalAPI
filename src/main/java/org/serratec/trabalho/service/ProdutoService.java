@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import org.serratec.trabalho.domain.Categoria;
 import org.serratec.trabalho.domain.Produto;
-import org.serratec.trabalho.dto.CategoriaDTO;
 import org.serratec.trabalho.dto.ProdutoDTO;
+import org.serratec.trabalho.repository.CategoriaRepository;
 import org.serratec.trabalho.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,8 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
     
     @Autowired
-    private CategoriaService catService;
-
+    private CategoriaRepository categoriaRepository;
+    
     // Listar todos
     public List<ProdutoDTO> listar() {
         List<Produto> produtos = produtoRepository.findAll();
@@ -56,7 +56,8 @@ public class ProdutoService {
     // Inserir novo produto
     public ProdutoDTO inserir(ProdutoDTO produtoDTO) {
         Produto produto = toEntity(produtoDTO);
-        
+        Categoria categoria = categoriaRepository.findById(produtoDTO.getCategoria().getId())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
         produto = produtoRepository.save(produto);
         return new ProdutoDTO(produto);
     }
@@ -68,11 +69,12 @@ public class ProdutoService {
             Produto produto = produtoOpt.get();
             produto.setNome(dto.getNome());
             produto.setPreco(dto.getPreco());
+            produto.setEstoque(dto.getEstoque());
             
-            CategoriaDTO cat = catService.findById(dto.getCategoria().getId())
+            Categoria cat = categoriaRepository.findById(dto.getCategoria().getId())
                     .orElseThrow(() -> new RuntimeException("Categoria não encontrada! Reveja o campo e tente novamente."));
             
-            produto.setCategoria(new Categoria(cat.getId(), cat.getNome()));
+            produto.setCategoria(cat);
             produto = produtoRepository.save(produto);
             return new ProdutoDTO(produto);
         }
@@ -89,11 +91,12 @@ public class ProdutoService {
         Produto produto = new Produto();
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
+        produto.setEstoque(dto.getEstoque());
        
-        CategoriaDTO cat = catService.findById(dto.getCategoria().getId())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada! Reveja o campo e tente novamente."));
-        
-        produto.setCategoria(new Categoria(cat.getId(), cat.getNome()));
+        Categoria cat = categoriaRepository.findById(dto.getCategoria().getId())
+            .orElseThrow(() -> new RuntimeException("Categoria não encontrada! Reveja o campo e tente novamente."));
+            
+        produto.setCategoria(cat);
         return produto;
     }
 

@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Produto {
@@ -25,7 +26,18 @@ public class Produto {
     @NotNull(message = "O preço não pode ser vazio!")
     @Positive(message = "O preço deve ser positivo!")
     private double preco;
+    
+    @PositiveOrZero
+    private int estoque;
 
+	public int getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(int estoque) {
+		this.estoque = estoque;
+	}
+  
 	public Long getId() {
 		return id;
 	}

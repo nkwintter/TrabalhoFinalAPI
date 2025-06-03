@@ -1,6 +1,7 @@
 package org.serratec.trabalho.dto;
 
 import org.serratec.trabalho.domain.Produto;
+import jakarta.validation.constraints.NotNull;
 
 public class ProdutoDTO {
 		
@@ -9,9 +10,10 @@ public class ProdutoDTO {
 	
 	private String nome;
 
-	
+	@NotNull
 	private double preco;
 	
+	private int estoque;
 	
 	private CategoriaDTO categoria;
 	
@@ -19,9 +21,10 @@ public class ProdutoDTO {
 		this.id = produto.getId();
         this.nome = produto.getNome();
         this.preco = produto.getPreco();
-        if (produto.getCategoria() != null) {
+        	if (produto.getCategoria() != null) {
             this.categoria = new CategoriaDTO(produto.getCategoria());
         }
+        this.estoque = produto.getEstoque();
     }
 
 	public ProdutoDTO() {
@@ -58,6 +61,14 @@ public class ProdutoDTO {
 
 	public void setCategoria(CategoriaDTO categoria) {
 		this.categoria = categoria;
+	}
+	
+	public int getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(int estoque) {
+		this.estoque = estoque;
 	}
 
 }
