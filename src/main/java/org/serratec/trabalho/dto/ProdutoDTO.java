@@ -1,29 +1,24 @@
 package org.serratec.trabalho.dto;
 
-import java.math.BigDecimal;
-
 import org.serratec.trabalho.domain.Produto;
-
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class ProdutoDTO {
 		
 	private Long id;
 
-	@NotBlank
+	
 	private String nome;
 
 	@NotNull
-	@DecimalMin(value = "0.01", message = "Preço deve ser maior que zero.")
-	private BigDecimal preco;
-
-	public CategoriaDTO categoria;
+	private double preco;
 	
 	private int estoque;
 	
+	private CategoriaDTO categoria;
+	
 	public ProdutoDTO(Produto produto) {
+		this.id = produto.getId();
         this.nome = produto.getNome();
         this.preco = produto.getPreco();
         	if (produto.getCategoria() != null) {
@@ -52,11 +47,11 @@ public class ProdutoDTO {
 		this.nome = nome;
 	}
 
-	public BigDecimal getPreco() {
+	public double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
 

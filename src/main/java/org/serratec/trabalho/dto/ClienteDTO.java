@@ -17,10 +17,15 @@ public class ClienteDTO {
 
 	@NotBlank(message = "O telefone é obrigatório.")
 	private String telefone;
-
+	
+	private String role;
+	
 	@Email(message = "E-mail inválido.")
 	@NotBlank(message = "O e-mail é obrigatório.")
 	private String email;
+	
+	@NotBlank(message = "A senha é obrigatória.")
+    private String senha;
 
 	@CPF(message = "CPF inválido.")
 	@NotBlank(message = "O CPF é obrigatório.")
@@ -36,6 +41,8 @@ public class ClienteDTO {
 		this.telefone = cliente.getTelefone();
 		this.email = cliente.getEmail();
 		this.cpf = cliente.getCpf();
+		this.senha = cliente.getSenha();
+		this.role = cliente.getRole();
 		if (cliente.getEndereco() != null) {
 			this.endereco = new EnderecoDTO(cliente.getEndereco());
 		}
@@ -92,5 +99,23 @@ public class ClienteDTO {
 	public void setEndereco(EnderecoDTO endereco) {
 		this.endereco = endereco;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	
 
 }

@@ -20,7 +20,7 @@ public class ProdutoService {
     
     @Autowired
     private CategoriaRepository categoriaRepository;
-
+    
     // Listar todos
     public List<ProdutoDTO> listar() {
         List<Produto> produtos = produtoRepository.findAll();
@@ -41,25 +41,40 @@ public class ProdutoService {
     	Optional<Produto> produtoOpt = produtoRepository.findById(id);
         return produtoOpt.orElse(null);
     }
+    
+    //Produto por categoria
+    public List<ProdutoDTO> findByCategoriaId(Long id) {
+    	List<Produto> produtos = produtoRepository.findAll();
+    	List<ProdutoDTO> produtosDTO = produtos.stream()
+    			.filter(produto -> produto.getCategoria() != null && produto.getCategoria().getId().equals(id))
+    			.map(ProdutoDTO :: new)
+    			.toList();
+    			
+    	return produtosDTO;		
+    }
 
     // Inserir novo produto
     public ProdutoDTO inserir(ProdutoDTO produtoDTO) {
         Produto produto = toEntity(produtoDTO);
-        Categoria categoria = categoriaRepository.findById(produtoDTO.categoria.getId())
+        Categoria categoria = categoriaRepository.findById(produtoDTO.getCategoria().getId())
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
         produto = produtoRepository.save(produto);
         return new ProdutoDTO(produto);
     }
 
     // Atualizar produto existente
-    public ProdutoDTO atualizar(Long id, ProdutoDTO produtoDTO) {
+    public ProdutoDTO atualizar(Long id, ProdutoDTO dto) {
         Optional<Produto> produtoOpt = produtoRepository.findById(id);
         if (produtoOpt.isPresent()) {
             Produto produto = produtoOpt.get();
-            produto.setNome(produtoDTO.getNome());
-            produto.setPreco(produtoDTO.getPreco());
-            produto.setCategoria(new Categoria(produtoDTO.getCategoria().getId(), produtoDTO.getCategoria().getNome())); 
-            produto.setEstoque(produtoDTO.getEstoque());
+            produto.setNome(dto.getNome());
+            produto.setPreco(dto.getPreco());
+            produto.setEstoque(dto.getEstoque());
+            
+            Categoria cat = categoriaRepository.findById(dto.getCategoria().getId())
+                    .orElseThrow(() -> new RuntimeException("Categoria não encontrada! Reveja o campo e tente novamente."));
+            
+            produto.setCategoria(cat);
             produto = produtoRepository.save(produto);
             return new ProdutoDTO(produto);
         }
@@ -72,13 +87,16 @@ public class ProdutoService {
     }
 
     // Conversão DTO -> Entidade
-    private Produto toEntity(ProdutoDTO dto) {
+    public Produto toEntity(ProdutoDTO dto) {
         Produto produto = new Produto();
-        produto.setId(dto.getId());
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
-        produto.setCategoria(new Categoria(dto.getCategoria().getId(), dto.getCategoria().getNome()));
         produto.setEstoque(dto.getEstoque());
+       
+        Categoria cat = categoriaRepository.findById(dto.getCategoria().getId())
+            .orElseThrow(() -> new RuntimeException("Categoria não encontrada! Reveja o campo e tente novamente."));
+            
+        produto.setCategoria(cat);
         return produto;
     }
 
