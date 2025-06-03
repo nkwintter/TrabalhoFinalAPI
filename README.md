@@ -25,20 +25,20 @@ A **Div das Plantas API** é uma aplicação RESTful que gerencia um sistema de 
 ### 🌸 Categorias
 - `GET /categorias` — Lista todas as categorias de plantas
 - `GET /categorias/{id}` — Lista as categorias de plantas por id
-- `POST /categorias` — Planta uma nova categoria
-- `PUT /categorias/{id}` — Aduba uma categoria existente
-- `DELETE /categorias/{id}` — Arranca a categoria pela raiz
+- `POST /categorias` — Planta uma nova categoria (apenas por um jardineiro 🌱) 
+- `PUT /categorias/{id}` — Aduba uma categoria existente (apenas por um jardineiro 🌱)
+- `DELETE /categorias/{id}` — Arranca a categoria pela raiz (apenas por um jardineiro 🌱)
 
 ### 🌼 Produtos
 - `GET /produtos` — Lista todos os produtos floridos
 - `GET /produtos/{id}` — Lista os produtos por id
-- `POST /produtos` — Cadastra um novo produto já com sua categoria enraizada
-- `PUT /produtos/{id}` — Atualiza informações da muda
-- `DELETE /produtos/{id}` — Remove o produto do canteiro
+- `POST /produtos` — Cadastra um novo produto já com sua categoria enraizada (apenas por um jardineiro 🌱)
+- `PUT /produtos/{id}` — Atualiza informações da muda (apenas por um jardineiro 🌱)
+- `DELETE /produtos/{id}` — Remove o produto do canteiro (apenas por um jardineiro 🌱)
 
 ### 🌿 Clientes
-- `GET /clientes` — Mostra todos os jardineiros cadastrados
-- `GET /clientes/{id}` — Lista os clientes por id
+- `GET /clientes` — Mostra todos os jardineiros cadastrados (apenas por um jardineiro 🌱)
+- `GET /clientes/{id}` — Lista os clientes por id (apenas por um jardineiro 🌱)
 - `POST /clientes` — Cadastra um novo cliente e consulta o endereço com o ViaCEP 🌐
 - `PUT /clientes/{id}` — Atualiza dados e envia um email perfumado ✉️
 - `DELETE /clientes/{id}` — Cancela o registro do cliente
@@ -47,7 +47,7 @@ A **Div das Plantas API** é uma aplicação RESTful que gerencia um sistema de 
 - `GET /pedidos` — Mostra todos os pedidos realizados (apenas por um jardineiro 🌱)
 - `GET /pedidos/{id}` — Consulta um pedido pelo número e calcula o valor total
 - `POST /pedidos` — Cria um novo pedido vinculado a um cliente e várias plantinhas
-- `PUT /pedidos/{id}` — Atualiza o status do pedido (enum 🌈)
+- `PUT /pedidos/{id}` — Atualiza o status do pedido (enum 🌈) (apenas por um jardineiro 🌱)
 - `DELETE /pedidos/{id}` — Remove o pedido da horta
 
 ---
