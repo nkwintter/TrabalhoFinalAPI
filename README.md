@@ -120,7 +120,28 @@ Assim, mesmo o que ainda não foi comprado já começa a florir no sistema 🌸�
 - **DELETE /DivDasPlantas/listadesejos/{clienteId}/produtos/{produtoId}** —Remove um produto específico da lista do cliente, com retorno personalizado indicando qual plantinha foi retirada.
 - **DELETE /DivDasPlantas/listadesejos/{clienteId}/limpar** — Remove todos os produtos da lista de desejos do cliente, deixando o espaço livre para novas vontades brotarem 🌾
   
+### 📄✨ Emissão de Notas Fiscais Automatizada - Pelo jardineiro: Nikolas Wintter 🌹
+Sempre que um pedido floresce 🌸 no sistema, uma **Nota Fiscal** é gerada automaticamente em formato **PDF** 🧾 — como uma pétala registrada com todo cuidado!  
+Essa nota garante **transparência**, **organização** e aquele toque profissional que encanta qualquer cliente! 💚
+O arquivo é magicamente salvo na pasta `notasFiscais`, como uma lembrança digital de cada compra realizada 🛍️.
+
+#### 🧾 O que vem na nota? Veja só esse buquê de informações:
+- **Identificação do Pedido** — Cada pedido com seu número único e especial 🔢  
+- **Dados do Cliente** — Nome completo 🪪 e CPF 📎 para deixar tudo certinho no jardim da legalidade 🌿  
+- **Data e Hora da Compra** — Formatados com carinho para eternizar o momento 🗓️🕒  
+- **Status do Pedido** — Mostra se o pedido está brotando 🌱, a caminho 🚛 ou já chegou com amor na porta 🏡  
+#### 🌸 Lista de Produtos Comprados:
+- Nome do item  
+- Quantidade  
+- Valor unitário  
+- Subtotal por item  
+#### 💰 Totais do Pedido:
+- Descontos aplicados (se a primavera trouxe promoção 🌸)  
+- Valor final pago com carinho  
+📌 Essa funcionalidade garante que cada pedido seja **documentado com cuidado** , trazendo praticidade, beleza e confiança para o seu sistema 🌻✨
+
 ---
+
 ## 💚 Time Jardineiro
 
 Desenvolvido com carinho e muitos `commits` pelos devs:
