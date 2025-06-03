@@ -35,14 +35,22 @@ public class ListaController {
     public ResponseEntity<String> adicionarProduto(@PathVariable Long clienteId, @PathVariable Long produtoId) {
         ListaDesejos lista = listaDesejosService.adicionarProduto(clienteId, produtoId);
         Produto ultimo = lista.getProdutos().get(lista.getProdutos().size() - 1);
-        String mensagem = "Produto '" + ultimo.getNome() + "' adicionado com sucesso à sua lista de desejos!";
+        String mensagem = "Produto: '" + ultimo.getNome() + "' adicionado com sucesso à sua lista de desejos!";
+  return ResponseEntity.ok(mensagem);
+    }
+    
+//    @DeleteMapping("/{clienteId}/produtos/{produtoId}")
+//    public ResponseEntity<ListaDesejosDTO> removerProduto(@PathVariable Long clienteId, @PathVariable Long produtoId) {
+//        listaDesejosService.removerProduto(clienteId, produtoId);
+//        return ResponseEntity.ok(listaDesejosService.listarPorCliente(clienteId));
+//    }
+
+    @DeleteMapping("/{clienteId}/produtos/{produtoId}")
+    public ResponseEntity<String> removerProduto(@PathVariable Long clienteId, @PathVariable Long produtoId) {
+        ListaDesejos lista =listaDesejosService.removerProduto(clienteId, produtoId);
+        Produto ultimo = lista.getProdutos().get(lista.getProdutos().size() - 1);
+        String mensagem = "Produto: '" + ultimo.getNome() + "' adicionado com sucesso à sua lista de desejos!";
   return ResponseEntity.ok(mensagem);
     }
 
-
-    @DeleteMapping("/{clienteId}/produtos/{produtoId}")
-    public ResponseEntity<ListaDesejosDTO> removerProduto(@PathVariable Long clienteId, @PathVariable Long produtoId) {
-        listaDesejosService.removerProduto(clienteId, produtoId);
-        return ResponseEntity.ok(listaDesejosService.listarPorCliente(clienteId));
-    }
 }

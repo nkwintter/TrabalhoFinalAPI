@@ -1,5 +1,6 @@
 package org.serratec.trabalho.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,14 +40,28 @@ public class ListaService {
         }
     }
 
+//    public ListaDesejos adicionarProduto(Long clienteId, Long produtoId) {
+//        ListaDesejos lista = buscarOuCriarLista(clienteId);
+//        Produto produto = produtoRepository.findById(produtoId)
+//        .orElseThrow(() -> new ListaDesejosException("Produto com o ID: " + produtoId+ "não encontrado"));
+//        if (!lista.getProdutos().contains(produto)) { lista.getProdutos().add(produto);return listaDesejoRepository.save(lista);
+//        }
+//        return lista;
+//    }
     public ListaDesejos adicionarProduto(Long clienteId, Long produtoId) {
         ListaDesejos lista = buscarOuCriarLista(clienteId);
         Produto produto = produtoRepository.findById(produtoId)
-        .orElseThrow(() -> new ListaDesejosException("Produto com o ID: " + produtoId+ "não encontrado"));
-        if (!lista.getProdutos().contains(produto)) { lista.getProdutos().add(produto);return listaDesejoRepository.save(lista);
+            .orElseThrow(() -> new ListaDesejosException("Produto não encontrado"));
+        
+        if (lista.getProdutos().contains(produto)) {
+            throw new ListaDesejosException("Este produto já está na lista de desejos");
         }
-        return lista;
+        
+        lista.getProdutos().add(produto);
+        lista.setDataCriacao(LocalDateTime.now());
+        return listaDesejoRepository.save(lista);
     }
+    
 
     public ListaDesejos removerProduto(Long clienteId, Long produtoId) {
         ListaDesejos lista = buscarOuCriarLista(clienteId);
