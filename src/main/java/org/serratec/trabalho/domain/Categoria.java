@@ -10,12 +10,12 @@ import jakarta.validation.constraints.NotBlank;
 public class Categoria {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @NotBlank(message = "O nome deve ser preenchido!")
     private String nome;
     
     public Categoria() {
-    	
-    }
+       }
     
 	public Categoria(Long id, String nome) {
 		this.id = id;

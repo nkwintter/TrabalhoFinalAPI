@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.serratec.trabalho.domain.Categoria;
 import org.serratec.trabalho.domain.Produto;
 import org.serratec.trabalho.dto.ProdutoDTO;
+import org.serratec.trabalho.repository.CategoriaRepository;
 import org.serratec.trabalho.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+    
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     // Listar todos
     public List<ProdutoDTO> listar() {
@@ -41,6 +45,8 @@ public class ProdutoService {
     // Inserir novo produto
     public ProdutoDTO inserir(ProdutoDTO produtoDTO) {
         Produto produto = toEntity(produtoDTO);
+        Categoria categoria = categoriaRepository.findById(produtoDTO.categoria.getId())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
         produto = produtoRepository.save(produto);
         return new ProdutoDTO(produto);
     }
@@ -53,6 +59,7 @@ public class ProdutoService {
             produto.setNome(produtoDTO.getNome());
             produto.setPreco(produtoDTO.getPreco());
             produto.setCategoria(new Categoria(produtoDTO.getCategoria().getId(), produtoDTO.getCategoria().getNome())); 
+            produto.setEstoque(produtoDTO.getEstoque());
             produto = produtoRepository.save(produto);
             return new ProdutoDTO(produto);
         }
@@ -71,6 +78,7 @@ public class ProdutoService {
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
         produto.setCategoria(new Categoria(dto.getCategoria().getId(), dto.getCategoria().getNome()));
+        produto.setEstoque(dto.getEstoque());
         return produto;
     }
 

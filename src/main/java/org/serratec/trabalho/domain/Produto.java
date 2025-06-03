@@ -2,13 +2,16 @@ package org.serratec.trabalho.domain;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Produto {
@@ -18,11 +21,23 @@ public class Produto {
     @NotBlank(message = "O nome não pode ser vazio!")
     private String nome;
     
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
     
     @Positive(message = "O preço deve ser positivo!")
     private BigDecimal preco;
+    
+    @PositiveOrZero
+    private int estoque;
+
+	public int getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(int estoque) {
+		this.estoque = estoque;
+	}
 
 	public Long getId() {
 		return id;
