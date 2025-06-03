@@ -91,6 +91,10 @@ public class PedidoService {
 		
         return new PedidoDTOSimplificado(pedido);
     }
+    
+//    public PedidoDTOSimplificado updateByEmail(String email, PedidoDTO dto) {
+//    	
+//    }
 
 	// Deletar Pedido
     public void deleteById(Long id) {
