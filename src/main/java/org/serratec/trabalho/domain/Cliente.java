@@ -2,11 +2,13 @@ package org.serratec.trabalho.domain;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -41,6 +43,19 @@ public class Cliente {
 	@Embedded
 	@Valid
 	private EnderecoCliente endereco;
+    
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private ListaDesejos listaDesejos;
+
+    
+
+	public ListaDesejos getListaDesejos() {
+		return listaDesejos;
+	}
+
+	public void setListaDesejos(ListaDesejos listaDesejos) {
+		this.listaDesejos = listaDesejos;
+	}
 
 	public Long getId() {
 		return id;

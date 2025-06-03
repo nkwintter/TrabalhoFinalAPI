@@ -105,6 +105,17 @@ public ResponseEntity<RespostaErro> handleCategoriaNaoEncontrada(CategoriaNaoEnc
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 }
 
+@ExceptionHandler(ListaDesejosException.class)
+public ResponseEntity<RespostaErro> handleCategoriaNaoEncontrada(ListaDesejosException ex) {
+    RespostaErro erro = new RespostaErro(
+        HttpStatus.NOT_FOUND.value(),
+        "Lista de Desejos não encontrada. Por favor, tente novamente!",
+        LocalDateTime.now(),
+        List.of(ex.getMessage())
+    );
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+}
+
 @ExceptionHandler(ConstraintViolationException.class)
 public ResponseEntity<RespostaErro> handleConstraintViolationException(ConstraintViolationException ex) {
     List<String> erros = ex.getConstraintViolations()
