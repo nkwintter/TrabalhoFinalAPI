@@ -7,8 +7,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "avaliacoes")
@@ -18,7 +19,8 @@ public class Avaliacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Size(min = 1, max = 5, message = "A nota deve ser somente entre 1 e 5!!")
+    @Min(value = 1, message = "A nota mínima é 1.")
+    @Max(value = 5, message = "A nota máxima é 5.")
     private int nota;
     
     @NotBlank(message = "O envio do comentário não pode ser vazio!")

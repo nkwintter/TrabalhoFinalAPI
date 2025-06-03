@@ -34,7 +34,7 @@ public class AvaliacaoService {
     private ClienteRepository clienteRepository;
 
     @Transactional
-    public Avaliacao criarAvaliacao(Long clienteId, AvaliacaoDTO dto) {
+    public AvaliacaoDTO criarAvaliacao(Long clienteId, AvaliacaoDTO dto) {
         // Verifica se o cliente existe
         Cliente cliente = clienteRepository.findById(clienteId)
             .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
@@ -59,16 +59,35 @@ public class AvaliacaoService {
         avaliacao.setProduto(produto);
         avaliacao.setNota(dto.getNota());
         avaliacao.setComentario(dto.getComentario());
-
-        return avaliacaoRepository.save(avaliacao);
+        
+        avaliacao = avaliacaoRepository.save(avaliacao);
+        
+        return transformarEntityToDto(avaliacao);
     }
+    
+    public AvaliacaoDTO transformarEntityToDto(Avaliacao avaliacao) {
+    	AvaliacaoDTO avaliacaoDTO = new AvaliacaoDTO();
+    	avaliacaoDTO.setNomeCliente(avaliacao.getCliente().getNome());
+    	avaliacaoDTO.setProdutoId(avaliacao.getProduto().getId()); 
+    	avaliacaoDTO.setNota(avaliacao.getNota());
+    	avaliacaoDTO.setComentario(avaliacao.getComentario());
+    	return avaliacaoDTO;
+    	}
 
-    public List<Avaliacao> listarAvaliacoesPorProduto(Long produtoId) {
-        return avaliacaoRepository.findByProdutoId(produtoId);
+    public List<AvaliacaoDTO> listarAvaliacoesPorProduto(Long produtoId) {
+    	
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByProdutoId(produtoId);
+        return avaliacoes.stream()
+        		.map(avaliacao -> {
+        			AvaliacaoDTO avaliacaoDTO = new AvaliacaoDTO();
+        			avaliacaoDTO = transformarEntityToDto(avaliacao);
+        			return avaliacaoDTO;
+        		})
+        		.toList();
     }
     
     @Transactional
-    public Avaliacao editarAvaliacao(Long clienteId, Long avaliacaoId, AvaliacaoDTO dto) {
+    public AvaliacaoDTO editarAvaliacao(Long clienteId, Long avaliacaoId, AvaliacaoDTO dto) {
         Avaliacao avaliacao = avaliacaoRepository.findById(avaliacaoId)
             .orElseThrow(() -> new RuntimeException("Avaliação não encontrada"));
 
@@ -79,7 +98,9 @@ public class AvaliacaoService {
         avaliacao.setNota(dto.getNota());
         avaliacao.setComentario(dto.getComentario());
 
-        return avaliacaoRepository.save(avaliacao);
+        avaliacao = avaliacaoRepository.save(avaliacao);
+        
+        return transformarEntityToDto(avaliacao);
     }
 
     @Transactional

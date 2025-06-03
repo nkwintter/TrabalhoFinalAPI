@@ -48,7 +48,7 @@ public class AvaliacaoController {
     })
     public ResponseEntity<?> criarAvaliacao(@RequestBody @Valid AvaliacaoDTO dto, Authentication auth) {
         Long clienteId = pegarClienteIdDoAuth(auth);
-        Avaliacao aval = avaliacaoService.criarAvaliacao(clienteId, dto);
+        AvaliacaoDTO aval = avaliacaoService.criarAvaliacao(clienteId, dto);
         return ResponseEntity.ok(aval);
     }
 
@@ -59,8 +59,8 @@ public class AvaliacaoController {
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = Avaliacao.class))),
         @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
-    public ResponseEntity<List<Avaliacao>> listarPorProduto(@PathVariable Long produtoId) {
-        List<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoesPorProduto(produtoId);
+    public ResponseEntity<List<AvaliacaoDTO>> listarPorProduto(@PathVariable Long produtoId) {
+        List<AvaliacaoDTO> avaliacoes = avaliacaoService.listarAvaliacoesPorProduto(produtoId);
         return ResponseEntity.ok(avaliacoes);
     }
 
@@ -73,7 +73,7 @@ public class AvaliacaoController {
     })
     public ResponseEntity<?> editarAvaliacao(@PathVariable Long id, @RequestBody @Valid AvaliacaoDTO dto, Authentication auth) {
         Long clienteId = pegarClienteIdDoAuth(auth);
-        Avaliacao aval = avaliacaoService.editarAvaliacao(clienteId, id, dto);
+        AvaliacaoDTO aval = avaliacaoService.editarAvaliacao(clienteId, id, dto);
         return ResponseEntity.ok(aval);
     }
 

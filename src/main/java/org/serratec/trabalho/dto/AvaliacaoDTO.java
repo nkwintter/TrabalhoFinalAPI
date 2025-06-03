@@ -1,7 +1,5 @@
 package org.serratec.trabalho.dto;
 
-import org.serratec.trabalho.domain.Avaliacao;
-
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -11,13 +9,27 @@ public class AvaliacaoDTO {
 	@NotNull(message = "ProdutoId não pode ser nulo")
     private Long produtoId;
 
-    @Min(value = 1, message = "Nota mínima é 1")
-    @Max(value = 5, message = "Nota máxima é 5")
+	@Min(value = 1, message = "A nota mínima é 1.")
+	@Max(value = 5, message = "A nota máxima é 5.")
     private int nota;
 
     @Size(max = 500, message = "Comentário pode ter até 500 caracteres")
     private String comentario;
     
+    private String nomeCliente;
+    
+	public AvaliacaoDTO(@NotNull(message = "ProdutoId não pode ser nulo") Long produtoId,
+			@Min(value = 1, message = "A nota mínima é 1.") @Max(value = 5, message = "A nota máxima é 5.") int nota,
+			@Size(max = 500, message = "Comentário pode ter até 500 caracteres") String comentario) {
+		super();
+		this.produtoId = produtoId;
+		this.nota = nota;
+		this.comentario = comentario;
+	}
+	
+	public AvaliacaoDTO() {
+	}
+
 	public Long getProdutoId() {
 		return produtoId;
 	}
@@ -35,5 +47,11 @@ public class AvaliacaoDTO {
 	}
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
 	}
 }
