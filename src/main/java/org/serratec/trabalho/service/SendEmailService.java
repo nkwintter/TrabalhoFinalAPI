@@ -90,4 +90,44 @@ public class SendEmailService {
 	        System.err.println("❌ Erro ao enviar e-mail: " + e.getMessage());
 	    }
 	}
+	
+	@Async
+	public void SendEmailUpdate(String remetente, String assunto, String nome) {
+		
+		try {
+			MimeMessage email = mailSender.createMimeMessage();
+	        MimeMessageHelper helper = new MimeMessageHelper(email, true);
+	        
+	        helper.setTo(remetente);
+	        helper.setSubject(assunto);
+	        
+	        String msg = """
+	        		<html>
+					<body style="text-align: center; font-family: Arial, sans-serif;">
+					    <h2 style="color: #4CAF50;">Olá novamente, dev-verde! 🌱</h2>
+					    <p>
+					        Detectamos que você fez algumas mudanças no seu canteiro de dados aqui no Div das Plantas — e está tudo certo! <br>
+					        Às vezes, a gente só precisa replantar uma informação, regar um detalhe ou adubar um campo pra continuar florescendo com ainda mais força. <br>
+					        🌿 Seus dados foram atualizados com sucesso e agora estão prontos pra seguir crescendo com você. <br>
+					        Se precisar de mais alguma coisa, estamos sempre por aqui — com uma pazinha na mão e o coração aberto. 💚 <br>
+					
+					        Com carinho, <br>
+					        Equipe Div das Plantas🌼
+					
+					    </p>
+					    <img src="https://i.postimg.cc/9FWp3CzN/Imagem-do-Whats-App-de-2025-06-03-s-09-08-06-762636d3.jpg" alt="Imagem dE Update de conta" width="300" style="margin: 20px auto; display: block; border-radius: 15px;">
+					    <p style="font-size: 12px; color: #888;">Continue aproveitado o nosso sistema! <br> </p>
+					</body>
+					</html>
+	        		""".formatted(nome);
+	        
+	        helper.setText(msg, true);
+
+	        mailSender.send(email);
+	        System.out.println("✅ Email enviado para " + remetente);
+	    } 
+		catch (Exception e) {
+	        System.err.println("❌ Erro ao enviar e-mail: " + e.getMessage());
+	    }
+	}
 }
