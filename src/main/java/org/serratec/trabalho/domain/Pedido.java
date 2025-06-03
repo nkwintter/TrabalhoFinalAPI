@@ -33,8 +33,10 @@ public class Pedido {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pedido_id")
 	private List<ItemPedido> itens = new ArrayList<>();
+	
+	private double totalSemDesconto;
 
-	private Double totalPedido;
+	private double totalPedido;
 
 	private int desconto = 10;
 	
@@ -52,8 +54,10 @@ public class Pedido {
 		for(ItemPedido item : this.itens){
 			subTotal += item.getSubtotal();
 		}
+		
+		this.totalSemDesconto = subTotal;
 				
-		this.totalPedido = subTotal - (subTotal * (desconto / 100));
+		this.totalPedido = subTotal - (subTotal * ((double)this.desconto / 100));
 		System.out.println(totalPedido);
 		
 	}
@@ -120,6 +124,14 @@ public class Pedido {
 
 	public void setDesconto(int desconto) {
 		this.desconto = desconto;
+	}
+
+	public double getTotalSemDesconto() {
+		return totalSemDesconto;
+	}
+
+	public void setTotalSemDesconto(double totalSemDesconto) {
+		this.totalSemDesconto = totalSemDesconto;
 	}
 	
 	

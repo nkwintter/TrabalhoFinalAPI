@@ -15,7 +15,7 @@ public class ProdutoDTO {
 	private String nome;
 
 	
-	private BigDecimal preco;
+	private double preco;
 	
 	
 	private CategoriaDTO categoria;
@@ -49,11 +49,11 @@ public class ProdutoDTO {
 		this.nome = nome;
 	}
 
-	public BigDecimal getPreco() {
+	public double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
 

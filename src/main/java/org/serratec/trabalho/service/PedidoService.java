@@ -69,13 +69,12 @@ public class PedidoService {
     	
     	List<ItemPedido> itens = dto.getItens().stream().map(item -> {
 			ItemPedido itnPedido =  new ItemPedido();
-			//itnPedido.setPedido(pedido); testar pra ver se funfa sem :)
 			Produto produto = produtoService.buscarId(item.getProdutoId());
 			
 			itnPedido.setProduto(produto);
 			
 			itnPedido.setQuantidade(item.getQuantidade());
-			itnPedido.setValor(produto.getPreco().doubleValue());
+			itnPedido.setValor(produto.getPreco());
 			
 			return itnPedido;
 		}).toList();

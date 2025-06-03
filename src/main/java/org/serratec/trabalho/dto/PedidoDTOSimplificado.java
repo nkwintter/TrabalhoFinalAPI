@@ -16,6 +16,10 @@ public class PedidoDTOSimplificado {
 	private String status;
 
 	private List<ItemPedidoDTO> itens;
+	
+	private double totalSemDesconto;
+	
+	private int percentualDesconto = 10;
 
 	private double totalPedido;
 
@@ -31,6 +35,7 @@ public class PedidoDTOSimplificado {
 		this.cliente = new ClienteResumoDTO(pedido.getCliente());
 		this.status = pedido.getStatus().toString();
 		this.itens = toDTO(pedido.getItens());
+		this.totalSemDesconto = pedido.getTotalSemDesconto();
 		this.totalPedido = pedido.getTotalPedido();
 		this.dataHoraCriacao = pedido.getDataCriacao();
 	}
@@ -40,7 +45,10 @@ public class PedidoDTOSimplificado {
 		List<ItemPedidoDTO> itensDTO = itens.stream().map(item -> {
 			ItemPedidoDTO itnPedido = new ItemPedidoDTO();
 			itnPedido.setProdutoId(item.getId());
+			itnPedido.setNomeProduto(item.getProduto().getNome());
+			itnPedido.setValorProduto(item.getProduto().getPreco());
 			itnPedido.setQuantidade(item.getQuantidade());
+			
 			return itnPedido;
 		}).toList();
 
@@ -92,4 +100,20 @@ public class PedidoDTOSimplificado {
 		return dataHoraCriacao;
 	}
 
+	public double getTotalSemDesconto() {
+		return totalSemDesconto;
+	}
+
+	public void setTotalSemDesconto(double totalSemDesconto) {
+		this.totalSemDesconto = totalSemDesconto;
+	}
+
+	public int getPercentualDesconto() {
+		return percentualDesconto;
+	}
+
+	public void setPercentualDesconto(int percentualDesconto) {
+		this.percentualDesconto = percentualDesconto;
+	}
+	
 }
