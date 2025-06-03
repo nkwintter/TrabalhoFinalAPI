@@ -78,12 +78,13 @@ public class PedidoController {
 	@PutMapping("/{id}")
 	public ResponseEntity<PedidoDTOSimplificado> UpdatePedidoADM(
 			@RequestHeader("Authorization") String authHeader,
+			@PathVariable Long id,
 			@RequestBody PedidoDTO dto){
 		
 		String token = authHeader.replace("Bearer ", "");
 		String email = jwtUtil.extractUsername(token);
 		
-		PedidoDTOSimplificado pedidoDTO = pedidoService.updateByEmail(email, dto);
+		PedidoDTOSimplificado pedidoDTO = pedidoService.updateByEmail(email, dto, id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDTO);
 	}
 	

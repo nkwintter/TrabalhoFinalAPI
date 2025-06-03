@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.serratec.trabalho.domain.Cliente;
 import org.serratec.trabalho.domain.ItemPedido;
 import org.serratec.trabalho.domain.Pedido;
 import org.serratec.trabalho.domain.Produto;
@@ -28,6 +29,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ProdutoService produtoService;
+	
+	@Autowired
+	private NotaFiscalService notaFiscalService;
 	
 	public List<PedidoDTO> buscarTodos() {
 		List<Pedido> pedidos = pedidoRepository.findAll();
@@ -88,13 +92,31 @@ public class PedidoService {
 		
 		pedido = pedidoRepository.save(pedido);
 		
+		//gera a nota fiscal do pedido do cliente
+		PedidoDTOSimplificado pedidoSimplificado = new PedidoDTOSimplificado(pedido);
+		String notaFiscal = notaFiscalService.gerarNotaFiscal(pedidoSimplificado);
+		pedidoSimplificado.setNotaFiscal(notaFiscal);
 		
-        return new PedidoDTOSimplificado(pedido);
+        return pedidoSimplificado;
     }
     
-//    public PedidoDTOSimplificado updateByEmail(String email, PedidoDTO dto) {
-//    	
-//    }
+    	public PedidoDTOSimplificado updateByEmail(String email, PedidoDTO dto, Long id) {
+    		Cliente cliente = clienteRepository.findByEmail(email).get();
+    		
+    		Optional<Pedido> pedidoOpt = pedidoRepository.findById(id);
+    		
+    		if(cliente.getRole().equals("ADMIN")) {
+    			Pedido pedido = pedidoOpt.get();
+    			pedido.setStatus(StatusPedido.valueOf(dto.getStatus().toUpperCase()));
+    			
+    			pedido = pedidoRepository.save(pedido);
+    			return new PedidoDTOSimplificado(pedido);
+    		}
+    		
+    		//caso seja User, REVER!
+    		return null;
+   
+    	}
 
 	// Deletar Pedido
     public void deleteById(Long id) {

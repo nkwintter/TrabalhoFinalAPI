@@ -22,6 +22,8 @@ public class PedidoDTOSimplificado {
 	private int percentualDesconto = 10;
 
 	private double totalPedido;
+	
+	private String notaFiscal;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataHoraCriacao;
@@ -115,5 +117,15 @@ public class PedidoDTOSimplificado {
 	public void setPercentualDesconto(int percentualDesconto) {
 		this.percentualDesconto = percentualDesconto;
 	}
+
+	public String getNotaFiscal() {
+		return notaFiscal;
+	}
+
+	public void setNotaFiscal(String notaFiscal) {
+		this.notaFiscal = notaFiscal;
+	}
+	
+	
 	
 }
