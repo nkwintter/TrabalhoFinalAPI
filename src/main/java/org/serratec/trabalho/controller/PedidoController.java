@@ -71,8 +71,9 @@ public class PedidoController {
 	// 	@ApiResponse(responseCode = "400", description = "Dados inválidos")
 	// })
 	// public ResponseEntity<PedidoDTO> inserir(@RequestBody PedidoDTO pedidoInsDTO){
-	// 	PedidoDTO pedidoDTO = pedidoService.inserir(pedidoInsDTO);
+	//	PedidoDTO pedidoDTO = pedidoService.inserir(pedidoInsDTO);
 	// 	return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDTO);
+	//}
 	// }
 	
 	@PutMapping("/{id}")

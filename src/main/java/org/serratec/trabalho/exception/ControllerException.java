@@ -2,7 +2,9 @@ package org.serratec.trabalho.exception;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -123,6 +125,15 @@ public ResponseEntity<RespostaErro> handleAllUncaught(Exception ex, WebRequest r
         List.of("Ocorreu um erro inesperado: " + ex.getMessage())
     );
     return ResponseEntity.internalServerError().body(erro);
+}
+@ExceptionHandler(ClienteNaoAutorizadoException.class)
+public ResponseEntity<?> handleClienteNaoAutorizado(ClienteNaoAutorizadoException ex) {
+    Map<String, Object> erro = new HashMap<>();
+    erro.put("status", HttpStatus.FORBIDDEN.value());
+    erro.put("titulo", "Acesso negado");
+    erro.put("dataHora", LocalDateTime.now());
+    erro.put("erros", List.of(ex.getMessage()));
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
 }
 
 }
