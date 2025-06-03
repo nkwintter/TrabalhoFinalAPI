@@ -39,6 +39,16 @@ public class Produto {
 		this.estoque = estoque;
 	}
 
+    private int estoque; 
+    
+	public int getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(int estoque) {
+		this.estoque = estoque;
+	}
+
 	public Long getId() {
 		return id;
 	}
